@@ -11,6 +11,7 @@ type GameState = { tableau: string[][]; completed: Record<string, string[]>; mov
 const categories = new Map(categoryData.categories.map((category) => [category.id, category]));
 const level = levelData.levels[0];
 const activeCategories = level.categoryIds.map((id) => categories.get(id)!);
+const SAVE_KEY = 'solitaire-associations.save';
 
 function shuffled<T>(items: T[], seed: number) {
   const copy = [...items];
@@ -34,11 +35,23 @@ export default function Home() {
   const [game, setGame] = useState<GameState>(() => makeGame());
   const [selectedColumn, setSelectedColumn] = useState<number | null>(null);
   const [message, setMessage] = useState('Tap an uncovered word, then choose its category.');
+  const [saveReady, setSaveReady] = useState(false);
   const remaining = useMemo(() => game.tableau.reduce((total, column) => total + column.length, 0), [game.tableau]);
   const selectedWord = selectedColumn === null ? null : game.tableau[selectedColumn].at(-1) ?? null;
   const isComplete = remaining === 0;
 
   useEffect(() => { if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js'); }, []);
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+      if (saved?.schemaVersion === 1 && saved?.levelId === level.id && saved?.game?.tableau && saved?.game?.completed) setGame(saved.game);
+    } catch { /* A malformed old save simply starts a new board. */ }
+    setSaveReady(true);
+  }, []);
+  useEffect(() => {
+    if (!saveReady) return;
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ schemaVersion: 1, levelId: level.id, updatedAt: new Date().toISOString(), game }));
+  }, [game, saveReady]);
 
   function chooseCategory(category: Category) {
     if (selectedColumn === null || !selectedWord) { setMessage('Choose an uncovered word first.'); return; }
