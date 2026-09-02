@@ -12,17 +12,19 @@ const categories = new Map(categoryData.categories.map((category) => [category.i
 const level = levelData.levels[0];
 const activeCategories = level.categoryIds.map((id) => categories.get(id)!);
 
-function shuffled<T>(items: T[]) {
+function shuffled<T>(items: T[], seed: number) {
   const copy = [...items];
+  let state = seed || 1;
   for (let index = copy.length - 1; index > 0; index -= 1) {
-    const next = Math.floor(Math.random() * (index + 1));
+    state = (state * 1664525 + 1013904223) >>> 0;
+    const next = state % (index + 1);
     [copy[index], copy[next]] = [copy[next], copy[index]];
   }
   return copy;
 }
 
-function makeGame(): GameState {
-  const deck = shuffled(activeCategories.flatMap((category) => category.words));
+function makeGame(seed = 101): GameState {
+  const deck = shuffled(activeCategories.flatMap((category) => category.words), seed);
   const tableau = Array.from({ length: 4 }, () => [] as string[]);
   deck.forEach((word, index) => tableau[index % tableau.length].push(word));
   return { tableau, completed: Object.fromEntries(activeCategories.map((category) => [category.id, []])), moves: 0, history: [] };
@@ -73,7 +75,7 @@ export default function Home() {
     setSelectedColumn(column); setMessage(`Hint: “${word}” belongs in ${category.name}.`);
   }
 
-  function restart() { setGame(makeGame()); setSelectedColumn(null); setMessage('New board ready. Tap an uncovered word to begin.'); }
+  function restart() { setGame(makeGame(Date.now())); setSelectedColumn(null); setMessage('New board ready. Tap an uncovered word to begin.'); }
 
   return <main className="app-shell"><section className="game-canvas" aria-label="Solitaire Associations game board">
     <header className="topbar"><div><p className="eyebrow">Solitaire Associations</p><h1>{level.name}</h1></div><button className="restart" onClick={restart} aria-label="Start level again">↻</button></header>
