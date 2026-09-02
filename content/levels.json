@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "levels": [
+    { "id": "level-001", "name": "First Steps", "difficulty": 1, "difficultyScore": 10, "categoryIds": ["primary-colors", "body-parts", "shapes", "weekdays"] },
+    { "id": "level-002", "name": "Daily Things", "difficulty": 2, "difficultyScore": 16, "categoryIds": ["primary-colors", "planets", "kitchen-actions", "weather"] },
+    { "id": "level-003", "name": "Simple Sort", "difficulty": 3, "difficultyScore": 24, "categoryIds": ["farm-animals", "citrus-fruits", "fabrics", "library-items"] },
+    { "id": "level-004", "name": "Natural World", "difficulty": 4, "difficultyScore": 33, "categoryIds": ["farm-animals", "ocean-animals", "weather", "planets", "shapes"] },
+    { "id": "level-005", "name": "Around Us", "difficulty": 5, "difficultyScore": 42, "categoryIds": ["body-parts", "citrus-fruits", "kitchen-actions", "musical-instruments", "fabrics"] },
+    { "id": "level-006", "name": "Far Places", "difficulty": 6, "difficultyScore": 52, "categoryIds": ["world-rivers", "ancient-civilizations", "ocean-animals", "gemstones", "weekdays"] },
+    { "id": "level-007", "name": "Fine Details", "difficulty": 7, "difficultyScore": 64, "categoryIds": ["architecture-terms", "fabrics", "gemstones", "musical-instruments", "raptors", "shapes"] },
+    { "id": "level-008", "name": "Mixed Bag", "difficulty": 8, "difficultyScore": 76, "categoryIds": ["world-rivers", "kitchen-actions", "library-items", "planets", "raptors", "citrus-fruits", "body-parts"] },
+    { "id": "level-009", "name": "Hidden Links", "difficulty": 9, "difficultyScore": 88, "categoryIds": ["ancient-civilizations", "architecture-terms", "world-rivers", "gemstones", "ocean-animals", "farm-animals", "fabrics"] },
+    { "id": "level-010", "name": "Grand Tour", "difficulty": 10, "difficultyScore": 100, "categoryIds": ["ancient-civilizations", "architecture-terms", "world-rivers", "musical-instruments", "gemstones", "raptors", "library-items", "kitchen-actions"] }
+  ]
+}

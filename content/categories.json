@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "categories": [
+    { "id": "farm-animals", "name": "Farm animals", "words": ["cow", "goat", "horse", "sheep", "donkey", "rooster"] },
+    { "id": "citrus-fruits", "name": "Citrus fruits", "words": ["lemon", "lime", "orange", "grapefruit", "pomelo", "clementine"] },
+    { "id": "world-rivers", "name": "World rivers", "words": ["Nile", "Amazon", "Danube", "Ganges", "Mekong", "Volga"] },
+    { "id": "musical-instruments", "name": "Musical instruments", "words": ["piano", "violin", "trumpet", "flute", "banjo", "oboe"] },
+    { "id": "kitchen-actions", "name": "Kitchen actions", "words": ["bake", "boil", "chop", "fry", "whisk", "simmer"] },
+    { "id": "gemstones", "name": "Gemstones", "words": ["ruby", "sapphire", "emerald", "diamond", "opal", "amethyst"] },
+    { "id": "ancient-civilizations", "name": "Ancient civilizations", "words": ["Roman", "Greek", "Egyptian", "Mayan", "Sumerian", "Phoenician"] },
+    { "id": "ocean-animals", "name": "Ocean animals", "words": ["shark", "whale", "dolphin", "octopus", "narwhal", "seahorse"] },
+    { "id": "library-items", "name": "Library items", "words": ["book", "shelf", "catalog", "librarian", "archive", "periodical"] },
+    { "id": "architecture-terms", "name": "Architecture terms", "words": ["arch", "column", "dome", "facade", "alcove", "balustrade"] },
+    { "id": "fabrics", "name": "Fabrics", "words": ["cotton", "silk", "wool", "linen", "velvet", "corduroy"] },
+    { "id": "weather", "name": "Weather", "words": ["rain", "snow", "thunder", "lightning", "hail", "drizzle"] },
+    { "id": "raptors", "name": "Raptors", "words": ["eagle", "hawk", "falcon", "owl", "kestrel", "osprey"] },
+    { "id": "primary-colors", "name": "Primary colors", "words": ["red", "blue", "yellow"] },
+    { "id": "body-parts", "name": "Body parts", "words": ["hand", "foot", "eye", "ear", "nose"] },
+    { "id": "planets", "name": "Planets", "words": ["Earth", "Mars", "Venus", "Jupiter"] },
+    { "id": "shapes", "name": "Shapes", "words": ["circle", "square", "triangle", "rectangle", "star"] },
+    { "id": "weekdays", "name": "Weekdays", "words": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+  ]
+}

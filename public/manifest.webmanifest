@@ -1,0 +1,9 @@
+{
+  "name": "Solitaire Associations",
+  "short_name": "Solitaire",
+  "description": "A calm word-matching solitaire game.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#174335",
+  "theme_color": "#174335"
+}
