@@ -16,3 +16,4 @@ button { font: inherit; }
 .word-card:nth-child(3) { top: calc(var(--reveal) + var(--reveal)); }
 .word-card:nth-child(4) { top: calc(var(--reveal) + var(--reveal) + var(--reveal)); }
 .word-card:nth-child(5) { top: calc(var(--reveal) + var(--reveal) + var(--reveal) + var(--reveal)); }
+.word-card { aspect-ratio: 3 / 4; }
