@@ -190,23 +190,31 @@ export default function Home() {
     setLevel(nextLevel); setGame(makeGame(Date.now(), nextLevel)); setSelectedColumn(null); setSelectedStart(null); setCelebratingSlot(null); setCelebratingCategory(null); setShowLevels(false); setMessage(`Level ${nextLevel.difficulty} ready.`);
   }
 
+  function goToNextLevel() {
+    const currentIndex = levels.findIndex((item) => item.id === level.id);
+    chooseLevel(levels[currentIndex + 1] ?? levels[0]);
+  }
+
   return <main className="app-shell"><section className="game-canvas" aria-label="Solitaire Associations game board">
-    <header className="topbar"><div><p className="eyebrow">Solitaire Associations</p></div><button className="restart" onClick={restart} aria-label="Start level again">↻</button></header>
-    <section className="progress" aria-label="Level progress"><div><span>Moves</span><strong>{game.moves}</strong></div><div><span>Cards left</span><strong>{remaining}</strong></div><div><span>Level</span><button className="level-select" onClick={() => setShowLevels((open) => !open)} aria-expanded={showLevels}>{level.difficulty} · {level.difficultyScore}</button></div></section>
+    <header className="topbar"><button className="level-select top-level" onClick={() => setShowLevels((open) => !open)} aria-expanded={showLevels}>Level {level.difficulty} - {level.cardCount} cards</button><div className="topbar-right"><button className="top-action" onClick={hint} disabled={isComplete} aria-label="Hint">Hint</button><button className="top-action" onClick={undo} disabled={game.history.length === 0} aria-label="Undo">Undo</button><button className="restart" onClick={restart} aria-label="Restart level">Restart</button></div></header>
     {showLevels && <section className="level-menu" aria-label="Choose level">{levels.map((item) => <button className={item.id === level.id ? 'current' : ''} key={item.id} onClick={() => chooseLevel(item)}><span>Level {item.difficulty}</span><small>{item.name} · {item.cardCount} cards · {item.categoryCount} categories</small></button>)}</section>}
+    {isComplete && <section className="level-complete" aria-live="polite"><span className="complete-sparkle">✦</span><div><strong>Level Cleared!</strong><small>All {level.categoryCount} categories are complete · {game.moves} moves</small></div><span className="complete-sparkle">✦</span></section>}
+    {isComplete && <button className="next-level-button" onClick={goToNextLevel}>{levels.findIndex((item) => item.id === level.id) === levels.length - 1 ? <>Replay<br />Level 1</> : <>Next<br />Level</>}</button>}
     <section className="stock-row" aria-label="Draw pile">
-      {game.waste.at(-1) ? <button className={`waste-card ${game.waste.at(-1)!.type} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => select('waste')} disabled={isComplete}>{game.waste.at(-1)!.label}</button> : <div className="waste-empty">Open a card</div>}
+      <div className="stock-moves"><span>Moves</span><strong>{game.moves}</strong></div>
+      {game.waste.at(-1) ? <button className={`waste-card ${game.waste.at(-1)!.type} ${game.waste.at(-1)!.type === 'word' && game.waste.at(-1)!.label.length <= 5 ? 'word-short' : game.waste.at(-1)!.type === 'word' && game.waste.at(-1)!.label.length <= 7 ? 'word-medium' : ''} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => select('waste')} disabled={isComplete}>{game.waste.at(-1)!.label}</button> : <div className="waste-empty">Open a card</div>}
       <button className="stock-card" onClick={drawCard} disabled={!game.stock.length || isComplete} aria-label="Open next card"><span>{game.stock.length}</span></button>
     </section>
+    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId)! : null; const completedWords = category ? game.completed[category.id] : []; const latestWord = completedWords?.at(-1); const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => moveToFoundation(index)} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord ? <><span className="foundation-base">{category.name}</span><span className="foundation-top">{latestWord}<small>{completedWords.length}/{category.words.length}</small></span></> : <span className="foundation-alone">{category.name}<small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
     <section className="tableau" aria-label="Tableau cards">{game.tableau.map((column, columnIndex) => {
       const reveal = column.length < 2 ? 0 : Math.max(10, Math.min(20, 160 / (column.length - 1)));
       return <div className="word-column" key={columnIndex} onClick={() => column.length === 0 && moveToEmptyColumn(columnIndex)} role={column.length === 0 ? 'button' : undefined} tabIndex={column.length === 0 ? 0 : undefined}>{column.map((card, cardIndex) => {
         const accessible = card.faceUp;
         const active = selectedColumn === columnIndex && cardIndex >= (selectedStart ?? column.length);
-        return <button className={`word-card ${card.type} ${card.faceUp ? 'uncovered' : 'covered'} ${active ? 'selected' : ''}`} disabled={!accessible || isComplete} key={card.id} style={{ top: cardIndex * reveal, zIndex: cardIndex }} onClick={() => select(columnIndex, cardIndex)}>{card.faceUp ? card.label : ''}</button>;
+        const fullyShown = cardIndex === column.length - 1;
+        const lengthClass = card.type === 'word' ? card.label.length <= 5 ? 'word-short' : card.label.length <= 7 ? 'word-medium' : '' : '';
+        return <button className={`word-card ${card.type} ${card.faceUp ? 'uncovered' : 'covered'} ${fullyShown ? 'full' : ''} ${lengthClass} ${active ? 'selected' : ''}`} disabled={!accessible || isComplete} key={card.id} style={{ top: cardIndex * reveal, zIndex: cardIndex }} onClick={() => select(columnIndex, cardIndex)}>{card.faceUp ? card.label : ''}</button>;
       })}</div>;
     })}</section>
-    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId)! : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button className={`foundation ${category ? 'occupied' : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => moveToFoundation(index)} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <><span>{category.name}</span><small>{game.completed[category.id].length}/{category.words.length}</small></> : <span>Category</span>}</button>; })}</section>
-    <footer className="actions"><button onClick={undo} disabled={game.history.length === 0}>Undo</button><button className="hint" onClick={hint} disabled={isComplete}>Hint</button></footer>
   </section></main>;
 }
