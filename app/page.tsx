@@ -84,10 +84,14 @@ export default function Home() {
 
   useEffect(() => { if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js'); }, []);
   useEffect(() => {
-    try { const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); if (saved?.schemaVersion === 4 && saved?.levelId === level.id && saved?.game) setGame(normalizeGame(saved.game, level)); } catch { /* Start a fresh game when an old save cannot be read. */ }
+    try {
+      const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+      const savedLevel = levels.find((item) => item.id === saved?.levelId);
+      if (saved?.schemaVersion === 4 && savedLevel && saved?.game) { setLevel(savedLevel); setGame(normalizeGame(saved.game, savedLevel)); }
+    } catch { /* Start a fresh game when an old save cannot be read. */ }
     setSaveReady(true);
   }, []);
-  useEffect(() => { if (saveReady) localStorage.setItem(SAVE_KEY, JSON.stringify({ schemaVersion: 4, levelId: level.id, updatedAt: new Date().toISOString(), game })); }, [game, saveReady]);
+  useEffect(() => { if (saveReady) localStorage.setItem(SAVE_KEY, JSON.stringify({ schemaVersion: 4, levelId: level.id, updatedAt: new Date().toISOString(), game })); }, [game, level, saveReady]);
 
   function select(source: Source, cardIndex?: number) {
     const column = source === 'waste' ? null : game.tableau[source];
