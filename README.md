@@ -50,9 +50,12 @@ Categories are reusable records. A category has a stable ID, a short display nam
 {
   "id": "primary-colors",
   "name": "Primary colors",
-  "words": ["red", "blue", "yellow"]
+  "words": ["red", "blue", "yellow"],
+  "visual": { "kind": "text" }
 }
 ```
+
+Every category currently uses `visual.kind: "text"`, preserving the existing presentation. Future `icon` or `image` categories should also provide a complete visual mapping for every word; if any mapping is missing, the whole category must fall back to text. Visual alt text is optional and should fall back to the category name or original word.
 
 Levels do not copy words. They reference category IDs:
 
@@ -107,11 +110,3 @@ When changing the save shape, either extend `normalizeGame()` in `app/page.tsx` 
 5. Test on a narrow portrait viewport and refresh the page to verify persistence.
 
 Potential next improvements include automated JSON validation, drag-and-drop with Pointer Events, richer hint logic, level-unlock progression, and more robust mobile accessibility testing.
-
-## Publishing
-
-This repository is configured as an OpenAI Sites project through `.openai/hosting.json`. Development should remain local unless a public deployment is explicitly requested. Before publishing, run `npm run build` and deploy the validated version through the project’s Sites workflow. The public site is:
-
-<https://solitaire-associations-huy.seineriver544982.chatgpt.site>
-
-Do not commit source credentials, local environment files, generated archives, or user save data.
