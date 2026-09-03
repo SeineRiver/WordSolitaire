@@ -12,7 +12,7 @@ type GameState = { tableau: Card[][]; stock: Card[]; waste: Card[]; foundations:
 
 const categories = new Map(categoryData.categories.map((category) => [category.id, category]));
 const levels = levelData.levels.map((item) => ({ ...item, categoryCount: item.categoryIds.length, cardCount: item.categoryIds.reduce((total, id) => total + 1 + (categories.get(id)?.words.length ?? 0), 0) }));
-const SAVE_KEY = 'solitaire-associations.save-v4';
+const SAVE_KEY = 'solitaire-associations.save-v5';
 
 function shuffled<T>(items: T[], seed: number) {
   const copy = [...items]; let state = seed || 1;
