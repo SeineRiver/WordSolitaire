@@ -833,7 +833,7 @@
         "kind": "image",
         "key": "rainbow-colors"
       },
-      "categoryImage": "/assets/categories/rainbow-colors/red.png",
+      "categoryImage": "/assets/categories/rainbow-colors/rainbow.png",
       "wordImages": {
         "red": "/assets/categories/rainbow-colors/red.png",
         "orange": "/assets/categories/rainbow-colors/orange.png",
