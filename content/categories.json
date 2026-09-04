@@ -37,7 +37,17 @@
         "clementine"
       ],
       "visual": {
-        "kind": "text"
+        "kind": "image",
+        "key": "citrus-fruits"
+      },
+      "categoryImage": "/assets/categories/citrus-fruits/orange.png",
+      "wordImages": {
+        "lemon": "/assets/categories/citrus-fruits/lemon.png",
+        "lime": "/assets/categories/citrus-fruits/lime.png",
+        "orange": "/assets/categories/citrus-fruits/orange.png",
+        "grapefruit": "/assets/categories/citrus-fruits/grapefruit.png",
+        "pomelo": "/assets/categories/citrus-fruits/pomelo.png",
+        "clementine": "/assets/categories/citrus-fruits/clementine.png"
       }
     },
     {
@@ -106,7 +116,17 @@
         "amethyst"
       ],
       "visual": {
-        "kind": "text"
+        "kind": "image",
+        "key": "gemstones"
+      },
+      "categoryImage": "/assets/categories/gemstones/diamond.png",
+      "wordImages": {
+        "ruby": "/assets/categories/gemstones/ruby.png",
+        "sapphire": "/assets/categories/gemstones/sapphire.png",
+        "emerald": "/assets/categories/gemstones/emerald.png",
+        "diamond": "/assets/categories/gemstones/diamond.png",
+        "opal": "/assets/categories/gemstones/opal.png",
+        "amethyst": "/assets/categories/gemstones/amethyst.png"
       }
     },
     {
@@ -220,7 +240,17 @@
         "osprey"
       ],
       "visual": {
-        "kind": "text"
+        "kind": "image",
+        "key": "raptors"
+      },
+      "categoryImage": "/assets/categories/raptors/eagle.png",
+      "wordImages": {
+        "eagle": "/assets/categories/raptors/eagle.png",
+        "hawk": "/assets/categories/raptors/hawk.png",
+        "falcon": "/assets/categories/raptors/falcon.png",
+        "owl": "/assets/categories/raptors/owl.png",
+        "kestrel": "/assets/categories/raptors/kestrel.png",
+        "osprey": "/assets/categories/raptors/osprey.png"
       }
     },
     {
@@ -448,7 +478,15 @@
         "cappuccino"
       ],
       "visual": {
-        "kind": "text"
+        "kind": "image",
+        "key": "coffee-types"
+      },
+      "categoryImage": "/assets/categories/coffee-types/espresso.png",
+      "wordImages": {
+        "espresso": "/assets/categories/coffee-types/espresso.png",
+        "latte": "/assets/categories/coffee-types/latte.png",
+        "mocha": "/assets/categories/coffee-types/mocha.png",
+        "cappuccino": "/assets/categories/coffee-types/cappuccino.png"
       }
     },
     {
@@ -461,7 +499,15 @@
         "husky"
       ],
       "visual": {
-        "kind": "text"
+        "kind": "image",
+        "key": "dog-breeds"
+      },
+      "categoryImage": "/assets/categories/dog-breeds/husky.png",
+      "wordImages": {
+        "poodle": "/assets/categories/dog-breeds/poodle.png",
+        "beagle": "/assets/categories/dog-breeds/beagle.png",
+        "boxer": "/assets/categories/dog-breeds/boxer.png",
+        "husky": "/assets/categories/dog-breeds/husky.png"
       }
     },
     {

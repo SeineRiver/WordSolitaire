@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import categoryData from '../content/categories.json';
 import levelData from '../content/levels.json';
 
-type Category = { id: string; name: string; words: string[]; visual?: { kind?: string; key?: string }; wordVisuals?: Record<string, string> };
+type Category = { id: string; name: string; words: string[]; visual?: { kind?: string; key?: string }; wordVisuals?: Record<string, string>; wordImages?: Record<string, string>; categoryImage?: string };
 type Card = { id: string; type: 'word' | 'category'; label: string; categoryId: string; faceUp: boolean };
 type Source = number | 'waste';
 type Move = { kind: 'stack' | 'foundation' | 'draw'; from: Source | 'stock'; fromIndex?: number; to?: number; cards: Card[] };
@@ -27,14 +27,34 @@ const levels = levelData.levels.map((item) => ({ ...item, categoryCount: item.ca
 const SAVE_KEY = 'solitaire-associations.save-v5';
 
 function categoryVisualReady(category: Category) {
-  return category.visual?.kind === 'icon' && Boolean(category.visual.key && iconGlyphs[category.visual.key]) && category.words.every((word) => Boolean(category.wordVisuals?.[word]));
+  if (category.visual?.kind === 'icon') return Boolean(category.visual.key && iconGlyphs[category.visual.key]) && category.words.every((word) => Boolean(category.wordVisuals?.[word]));
+  if (category.visual?.kind === 'image') return Boolean(category.visual.key && category.categoryImage) && category.words.every((word) => Boolean(category.wordImages?.[word]));
+  return false;
 }
 
 function cardVisual(categoryId: string, label: string, type: Card['type']) {
   const category = categories.get(categoryId);
   if (!category || !categoryVisualReady(category)) return { kind: 'text', value: label, alt: label };
+  if (category.visual!.kind === 'image') return { kind: 'image', value: type === 'category' ? category.categoryImage! : category.wordImages![label], alt: type === 'category' ? category.name : label };
   if (type === 'category') return { kind: 'icon', value: iconGlyphs[category.visual!.key!], alt: category.name };
   return { kind: 'icon', value: category.wordVisuals![label], alt: label };
+}
+
+function labelSizeClass(label: string) {
+  return label.length <= 5 ? 'word-short' : label.length <= 7 ? 'word-medium' : '';
+}
+
+function renderVisual(visual: { kind: string; value: string }, label?: string, showImage = true) {
+  if (visual.kind !== 'image') return visual.value;
+  if (label && !showImage) return label;
+  return <>{label && <span className="category-label">{label}</span>}<img className="card-image" src={visual.value} alt="" draggable={false} /></>;
+}
+
+function renderCategoryVisual(visual: { kind: string; value: string }, label: string, partial = false) {
+  if (partial) return <span className="category-label">{label}</span>;
+  if (visual.kind === 'image') return <><span className="category-label">{label}</span><img className="card-image" src={visual.value} alt="" draggable={false} /></>;
+  if (visual.kind === 'icon') return <><span className="category-label">{label}</span><span className="category-glyph" aria-hidden="true">{visual.value}</span></>;
+  return label;
 }
 
 function shuffled<T>(items: T[], seed: number) {
@@ -229,19 +249,19 @@ export default function Home() {
     {isComplete && <button className="next-level-button" onClick={goToNextLevel}>{levels.findIndex((item) => item.id === level.id) === levels.length - 1 ? <>Replay<br />Level 1</> : <>Next<br />Level</>}</button>}
     <section className="stock-row" aria-label="Draw pile">
       <div className="stock-moves"><span>Moves</span><strong>{game.moves}</strong></div>
-      {game.waste.at(-1) ? (() => { const card = game.waste.at(-1)!; const visual = cardVisual(card.categoryId, card.label, card.type); return <button className={`waste-card ${card.type} ${visual.kind} ${card.type === 'word' && card.label.length <= 5 ? 'word-short' : card.type === 'word' && card.label.length <= 7 ? 'word-medium' : ''} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => select('waste')} disabled={isComplete} aria-label={visual.alt}><span className="card-content">{visual.value}</span></button>; })() : <div className="waste-empty">Open a card</div>}
+      {game.waste.at(-1) ? (() => { const card = game.waste.at(-1)!; const visual = cardVisual(card.categoryId, card.label, card.type); return <button className={`waste-card ${card.type} ${visual.kind} ${labelSizeClass(card.label)} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => select('waste')} disabled={isComplete} aria-label={visual.alt}><span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label) : renderVisual(visual)}</span></button>; })() : <div className="waste-empty">Open a card</div>}
       <button className="stock-card" onClick={drawCard} disabled={!game.stock.length || isComplete} aria-label="Open next card"><span>{game.stock.length}</span></button>
     </section>
-    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId)! : null; const completedWords = category ? game.completed[category.id] : []; const latestWord = completedWords?.at(-1); const latestWordClass = latestWord ? latestWord.length <= 5 ? 'word-short' : latestWord.length <= 7 ? 'word-medium' : '' : ''; const categoryVisual = category ? cardVisual(category.id, category.name, 'category') : null; const wordVisual = category && latestWord ? cardVisual(category.id, latestWord, 'word') : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => moveToFoundation(index)} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord && wordVisual ? <><span className={`foundation-base ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}>{categoryVisual!.value}</span><span className={`foundation-top ${latestWordClass} ${wordVisual.kind}`} aria-label={wordVisual.alt}><span className="card-content">{wordVisual.value}</span><small>{completedWords.length}/{category.words.length}</small></span></> : <span className={`foundation-alone ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}><span className="card-content">{categoryVisual!.value}</span><small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
+    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId)! : null; const completedWords = category ? game.completed[category.id] : []; const latestWord = completedWords?.at(-1); const latestWordClass = latestWord ? labelSizeClass(latestWord) : ''; const categoryVisual = category ? cardVisual(category.id, category.name, 'category') : null; const wordVisual = category && latestWord ? cardVisual(category.id, latestWord, 'word') : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${category ? labelSizeClass(category.name) : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => moveToFoundation(index)} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord && wordVisual ? <><span className={`foundation-base ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}>{renderCategoryVisual(categoryVisual!, category.name, true)}</span><span className={`foundation-top ${latestWordClass} ${wordVisual.kind}`} aria-label={wordVisual.alt}><span className="card-content">{renderVisual(wordVisual)}</span><small>{completedWords.length}/{category.words.length}</small></span></> : <span className={`foundation-alone ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}><span className="card-content">{renderCategoryVisual(categoryVisual!, category.name)}</span><small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
     <section className="tableau" aria-label="Tableau cards">{game.tableau.map((column, columnIndex) => {
       const reveal = column.length < 2 ? 0 : Math.max(10, Math.min(20, 160 / (column.length - 1)));
       return <div className="word-column" key={columnIndex} onClick={() => column.length === 0 && moveToEmptyColumn(columnIndex)} role={column.length === 0 ? 'button' : undefined} tabIndex={column.length === 0 ? 0 : undefined}>{column.map((card, cardIndex) => {
         const accessible = card.faceUp;
         const active = selectedColumn === columnIndex && cardIndex >= (selectedStart ?? column.length);
         const fullyShown = cardIndex === column.length - 1;
-        const lengthClass = card.type === 'word' ? card.label.length <= 5 ? 'word-short' : card.label.length <= 7 ? 'word-medium' : '' : '';
+        const lengthClass = labelSizeClass(card.label);
         const visual = cardVisual(card.categoryId, card.label, card.type);
-        return <button className={`word-card ${card.type} ${card.faceUp ? 'uncovered' : 'covered'} ${fullyShown ? 'full' : ''} ${lengthClass} ${visual.kind} ${active ? 'selected' : ''}`} disabled={!accessible || isComplete} key={card.id} style={{ top: cardIndex * reveal, zIndex: cardIndex }} onClick={() => select(columnIndex, cardIndex)} aria-label={visual.alt}>{card.faceUp ? <span className="card-content">{visual.value}</span> : ''}</button>;
+        return <button className={`word-card ${card.type} ${card.faceUp ? 'uncovered' : 'covered'} ${fullyShown ? 'full' : ''} ${lengthClass} ${visual.kind} ${active ? 'selected' : ''}`} disabled={!accessible || isComplete} key={card.id} style={{ top: cardIndex * reveal, zIndex: cardIndex }} onClick={() => select(columnIndex, cardIndex)} aria-label={visual.alt}>{card.faceUp ? <span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label, !fullyShown) : renderVisual(visual)}</span> : ''}</button>;
       })}</div>;
     })}</section>
   </section></main>;

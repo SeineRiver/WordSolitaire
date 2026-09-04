@@ -37,6 +37,7 @@ app/
   public/sw.js          Network-first service worker
   content/categories.json Reusable category and word database
   content/levels.json   Level definitions and category references
+  docs/visual-asset-style.md  Canonical style guide for custom image assets
   .openai/hosting.json  Sites project metadata (only needed for publishing)
 ```
 
@@ -55,7 +56,7 @@ Categories are reusable records. A category has a stable ID, a short display nam
 }
 ```
 
-Every category currently uses `visual.kind: "text"`, preserving the existing presentation. Future `icon` or `image` categories should also provide a complete visual mapping for every word; if any mapping is missing, the whole category must fall back to text. Visual alt text is optional and should fall back to the category name or original word.
+Categories use `visual.kind: "text"` by default; selected categories may use `icon`. Future `image` categories should follow the [visual asset style guide](docs/visual-asset-style.md) and provide a complete visual mapping for every word. If any mapping is missing, the whole category must fall back to text. Visual alt text is optional and should fall back to the category name or original word.
 
 Levels do not copy words. They reference category IDs:
 
