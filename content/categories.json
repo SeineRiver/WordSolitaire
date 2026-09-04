@@ -74,7 +74,7 @@
         "trumpet",
         "flute",
         "banjo",
-        "oboe"
+        "guitar"
       ],
       "visual": {
         "kind": "icon",
@@ -86,7 +86,7 @@
         "trumpet": "🎺",
         "flute": "🪈",
         "banjo": "🪕",
-        "oboe": "🎵"
+        "guitar": "🎸"
       }
     },
     {
@@ -259,7 +259,7 @@
       "words": [
         "red",
         "blue",
-        "yellow"
+        "green"
       ],
       "visual": {
         "kind": "icon",
@@ -268,7 +268,7 @@
       "wordVisuals": {
         "red": "🔴",
         "blue": "🔵",
-        "yellow": "🟡"
+        "green": "🟢"
       }
     },
     {
@@ -481,7 +481,7 @@
         "kind": "image",
         "key": "coffee-types"
       },
-      "categoryImage": "/assets/categories/coffee-types/espresso.png",
+      "categoryImage": "/assets/categories/coffee-types/espresso-machine.png",
       "wordImages": {
         "espresso": "/assets/categories/coffee-types/espresso.png",
         "latte": "/assets/categories/coffee-types/latte.png",
@@ -496,18 +496,26 @@
         "poodle",
         "beagle",
         "boxer",
-        "husky"
+        "husky",
+        "chihuahua",
+        "golden retriever",
+        "labrador",
+        "pug"
       ],
       "visual": {
         "kind": "image",
         "key": "dog-breeds"
       },
-      "categoryImage": "/assets/categories/dog-breeds/husky.png",
+      "categoryImage": "/assets/categories/dog-breeds/dog-face.png",
       "wordImages": {
         "poodle": "/assets/categories/dog-breeds/poodle.png",
         "beagle": "/assets/categories/dog-breeds/beagle.png",
         "boxer": "/assets/categories/dog-breeds/boxer.png",
-        "husky": "/assets/categories/dog-breeds/husky.png"
+        "husky": "/assets/categories/dog-breeds/husky.png",
+        "chihuahua": "/assets/categories/dog-breeds/chihuahua.png",
+        "golden retriever": "/assets/categories/dog-breeds/golden-retriever.png",
+        "labrador": "/assets/categories/dog-breeds/labrador.png",
+        "pug": "/assets/categories/dog-breeds/pug.png"
       }
     },
     {

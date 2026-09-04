@@ -14,8 +14,8 @@ This is the canonical style guide for custom image assets used on cards. New cat
 
 ## Technical specification
 
-- Square canvas: **512 × 512 px** source, exported as optimized SVG where practical or WebP for painterly/raster work.
-- Keep the subject inside a centered **safe area of 384 × 384 px** (75% of the canvas), leaving comfortable transparent padding.
+- Square canvas: **627 × 627 px** source, exported as optimized SVG where practical or WebP for painterly/raster work.
+- Keep the subject inside a centered **safe area of 470 × 470 px** (75% of the canvas), leaving comfortable transparent padding.
 - Use sRGB color and preserve transparency.
 - Avoid very thin lines, tiny highlights, and low-contrast details that disappear on a phone.
 - Target an individual asset size below 50 KB for SVG or below 100 KB for WebP when possible.
@@ -66,7 +66,7 @@ The renderer must keep the all-or-nothing rule: if the category image key is unk
 
 Use this as the base prompt for new assets:
 
-> Create a single centered [SUBJECT] for a mobile puzzle-card game. Friendly modern flat vector illustration, clean rounded medium-weight outline, restrained warm palette, subtle soft shading, clear silhouette, transparent background, square 512x512 canvas, subject contained within the central 75% safe area, no text, no labels, no border, no scenery, no extra objects. Match the established Solitaire Associations visual asset style.
+> Create a single centered [SUBJECT] for a mobile puzzle-card game. Friendly modern flat vector illustration, clean rounded medium-weight outline, restrained warm palette, subtle soft shading, clear silhouette, transparent background, square 627x627 canvas, subject contained within the central 75% safe area, no text, no labels, no border, no scenery, no extra objects. Match the established Solitaire Associations visual asset style.
 
 For a category, generate every word in one batch or with the same style reference. Do not mix photographs, 3D renders, and flat illustrations within one category.
 
@@ -80,4 +80,3 @@ Before enabling an image category:
 4. All assets in the category share the same style, outline, and visual weight.
 5. The category still has a meaningful text fallback and accessible alt text.
 6. Record the source and license in the asset manifest. Generated assets should be marked `original`.
-
