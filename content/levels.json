@@ -1,56 +1,1756 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "levels": [
-    {"id":"level-001","name":"First Links 1","difficulty":1,"difficultyScore":10,"categoryIds":["farm-animals","primary-colors","planets","metals"]},
-    {"id":"level-002","name":"First Links 2","difficulty":2,"difficultyScore":20,"categoryIds":["farm-animals","primary-colors","body-parts","metals"]},
-    {"id":"level-003","name":"First Links 3","difficulty":3,"difficultyScore":30,"categoryIds":["farm-animals","citrus-fruits","primary-colors","metals"]},
-    {"id":"level-004","name":"First Links 4","difficulty":4,"difficultyScore":40,"categoryIds":["farm-animals","citrus-fruits","primary-colors","planets"]},
-    {"id":"level-005","name":"First Links 5","difficulty":5,"difficultyScore":50,"categoryIds":["farm-animals","citrus-fruits","primary-colors","body-parts"]},
-    {"id":"level-006","name":"Daily Sort 6","difficulty":6,"difficultyScore":60,"categoryIds":["farm-animals","citrus-fruits","world-rivers","primary-colors"]},
-    {"id":"level-007","name":"Daily Sort 7","difficulty":7,"difficultyScore":70,"categoryIds":["farm-animals","citrus-fruits","world-rivers","planets"]},
-    {"id":"level-008","name":"Daily Sort 8","difficulty":8,"difficultyScore":80,"categoryIds":["farm-animals","citrus-fruits","world-rivers","body-parts"]},
-    {"id":"level-009","name":"Daily Sort 9","difficulty":9,"difficultyScore":90,"categoryIds":["farm-animals","citrus-fruits","primary-colors","body-parts","metals"]},
-    {"id":"level-010","name":"Daily Sort 10","difficulty":10,"difficultyScore":100,"categoryIds":["farm-animals","citrus-fruits","world-rivers","primary-colors","metals"]},
-    {"id":"level-011","name":"Growing Paths 11","difficulty":11,"difficultyScore":110,"categoryIds":["farm-animals","citrus-fruits","world-rivers","primary-colors","planets"]},
-    {"id":"level-012","name":"Growing Paths 12","difficulty":12,"difficultyScore":120,"categoryIds":["farm-animals","citrus-fruits","world-rivers","primary-colors","body-parts"]},
-    {"id":"level-013","name":"Growing Paths 13","difficulty":13,"difficultyScore":130,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","primary-colors"]},
-    {"id":"level-014","name":"Growing Paths 14","difficulty":14,"difficultyScore":140,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","planets"]},
-    {"id":"level-015","name":"Growing Paths 15","difficulty":15,"difficultyScore":150,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","body-parts"]},
-    {"id":"level-016","name":"Wider Mix 16","difficulty":16,"difficultyScore":160,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions"]},
-    {"id":"level-017","name":"Wider Mix 17","difficulty":17,"difficultyScore":170,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","primary-colors","metals"]},
-    {"id":"level-018","name":"Wider Mix 18","difficulty":18,"difficultyScore":180,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","primary-colors","planets"]},
-    {"id":"level-019","name":"Wider Mix 19","difficulty":19,"difficultyScore":190,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","primary-colors","body-parts"]},
-    {"id":"level-020","name":"Wider Mix 20","difficulty":20,"difficultyScore":200,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","primary-colors"]},
-    {"id":"level-021","name":"Hidden Connections 21","difficulty":21,"difficultyScore":210,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","planets"]},
-    {"id":"level-022","name":"Hidden Connections 22","difficulty":22,"difficultyScore":220,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","body-parts"]},
-    {"id":"level-023","name":"Hidden Connections 23","difficulty":23,"difficultyScore":230,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones"]},
-    {"id":"level-024","name":"Hidden Connections 24","difficulty":24,"difficultyScore":240,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","music-notes"]},
-    {"id":"level-025","name":"Hidden Connections 25","difficulty":25,"difficultyScore":250,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","primary-colors","planets"]},
-    {"id":"level-026","name":"Curious Clues 26","difficulty":26,"difficultyScore":260,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","primary-colors"]},
-    {"id":"level-027","name":"Curious Clues 27","difficulty":27,"difficultyScore":270,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","planets"]},
-    {"id":"level-028","name":"Curious Clues 28","difficulty":28,"difficultyScore":280,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","body-parts"]},
-    {"id":"level-029","name":"Curious Clues 29","difficulty":29,"difficultyScore":290,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations"]},
-    {"id":"level-030","name":"Curious Clues 30","difficulty":30,"difficultyScore":300,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","music-notes"]},
-    {"id":"level-031","name":"Word Routes 31","difficulty":31,"difficultyScore":310,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","body-organs"]},
-    {"id":"level-032","name":"Word Routes 32","difficulty":32,"difficultyScore":320,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","greek-gods"]},
-    {"id":"level-033","name":"Word Routes 33","difficulty":33,"difficultyScore":330,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","primary-colors"]},
-    {"id":"level-034","name":"Word Routes 34","difficulty":34,"difficultyScore":340,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","planets"]},
-    {"id":"level-035","name":"Word Routes 35","difficulty":35,"difficultyScore":350,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","body-parts"]},
-    {"id":"level-036","name":"Deep Grouping 36","difficulty":36,"difficultyScore":360,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals"]},
-    {"id":"level-037","name":"Deep Grouping 37","difficulty":37,"difficultyScore":370,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","music-notes"]},
-    {"id":"level-038","name":"Deep Grouping 38","difficulty":38,"difficultyScore":380,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","body-organs"]},
-    {"id":"level-039","name":"Deep Grouping 39","difficulty":39,"difficultyScore":390,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","greek-gods"]},
-    {"id":"level-040","name":"Deep Grouping 40","difficulty":40,"difficultyScore":400,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","music-notes","greek-gods"]},
-    {"id":"level-041","name":"Expert Links 41","difficulty":41,"difficultyScore":410,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","planets"]},
-    {"id":"level-042","name":"Expert Links 42","difficulty":42,"difficultyScore":420,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","body-parts"]},
-    {"id":"level-043","name":"Expert Links 43","difficulty":43,"difficultyScore":430,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","library-items"]},
-    {"id":"level-044","name":"Expert Links 44","difficulty":44,"difficultyScore":440,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","music-notes"]},
-    {"id":"level-045","name":"Expert Links 45","difficulty":45,"difficultyScore":450,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","body-organs"]},
-    {"id":"level-046","name":"Master Sort 46","difficulty":46,"difficultyScore":460,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","greek-gods"]},
-    {"id":"level-047","name":"Master Sort 47","difficulty":47,"difficultyScore":470,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","music-notes","greek-gods"]},
-    {"id":"level-048","name":"Master Sort 48","difficulty":48,"difficultyScore":480,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","body-organs","greek-gods"]},
-    {"id":"level-049","name":"Master Sort 49","difficulty":49,"difficultyScore":490,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","library-items","body-parts"]},
-    {"id":"level-050","name":"Master Sort 50","difficulty":50,"difficultyScore":500,"categoryIds":["farm-animals","citrus-fruits","world-rivers","musical-instruments","kitchen-actions","gemstones","ancient-civilizations","ocean-animals","library-items","architecture-terms"]}
+    {
+      "id": "level-001",
+      "name": "First Links 1",
+      "difficulty": 1,
+      "difficultyScore": 10,
+      "totalCards": 25,
+      "categoryCount": 4,
+      "wordCounts": [
+        3,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-002",
+      "name": "First Links 2",
+      "difficulty": 2,
+      "difficultyScore": 20,
+      "totalCards": 26,
+      "categoryCount": 4,
+      "wordCounts": [
+        3,
+        4,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-003",
+      "name": "First Links 3",
+      "difficulty": 3,
+      "difficultyScore": 30,
+      "totalCards": 26,
+      "categoryCount": 4,
+      "wordCounts": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "level-004",
+      "name": "First Links 4",
+      "difficulty": 4,
+      "difficultyScore": 40,
+      "totalCards": 27,
+      "categoryCount": 4,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        9
+      ]
+    },
+    {
+      "id": "level-005",
+      "name": "First Links 5",
+      "difficulty": 5,
+      "difficultyScore": 50,
+      "totalCards": 27,
+      "categoryCount": 4,
+      "wordCounts": [
+        4,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-006",
+      "name": "First Links 6",
+      "difficulty": 6,
+      "difficultyScore": 60,
+      "totalCards": 28,
+      "categoryCount": 4,
+      "wordCounts": [
+        3,
+        3,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-007",
+      "name": "First Links 7",
+      "difficulty": 7,
+      "difficultyScore": 70,
+      "totalCards": 28,
+      "categoryCount": 4,
+      "wordCounts": [
+        4,
+        6,
+        7,
+        7
+      ]
+    },
+    {
+      "id": "level-008",
+      "name": "First Links 8",
+      "difficulty": 8,
+      "difficultyScore": 80,
+      "totalCards": 29,
+      "categoryCount": 4,
+      "wordCounts": [
+        5,
+        6,
+        6,
+        8
+      ]
+    },
+    {
+      "id": "level-009",
+      "name": "First Links 9",
+      "difficulty": 9,
+      "difficultyScore": 90,
+      "totalCards": 29,
+      "categoryCount": 4,
+      "wordCounts": [
+        5,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-010",
+      "name": "First Links 10",
+      "difficulty": 10,
+      "difficultyScore": 100,
+      "totalCards": 30,
+      "categoryCount": 4,
+      "wordCounts": [
+        3,
+        7,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-011",
+      "name": "First Links 11",
+      "difficulty": 11,
+      "difficultyScore": 110,
+      "totalCards": 30,
+      "categoryCount": 4,
+      "wordCounts": [
+        4,
+        4,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-012",
+      "name": "First Links 12",
+      "difficulty": 12,
+      "difficultyScore": 120,
+      "totalCards": 31,
+      "categoryCount": 4,
+      "wordCounts": [
+        5,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-013",
+      "name": "First Links 13",
+      "difficulty": 13,
+      "difficultyScore": 130,
+      "totalCards": 31,
+      "categoryCount": 4,
+      "wordCounts": [
+        6,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-014",
+      "name": "First Links 14",
+      "difficulty": 14,
+      "difficultyScore": 140,
+      "totalCards": 32,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-015",
+      "name": "First Links 15",
+      "difficulty": 15,
+      "difficultyScore": 150,
+      "totalCards": 32,
+      "categoryCount": 5,
+      "wordCounts": [
+        3,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-016",
+      "name": "First Links 16",
+      "difficulty": 16,
+      "difficultyScore": 160,
+      "totalCards": 33,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-017",
+      "name": "First Links 17",
+      "difficulty": 17,
+      "difficultyScore": 170,
+      "totalCards": 33,
+      "categoryCount": 5,
+      "wordCounts": [
+        3,
+        3,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-018",
+      "name": "First Links 18",
+      "difficulty": 18,
+      "difficultyScore": 180,
+      "totalCards": 34,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-019",
+      "name": "First Links 19",
+      "difficulty": 19,
+      "difficultyScore": 190,
+      "totalCards": 34,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-020",
+      "name": "First Links 20",
+      "difficulty": 20,
+      "difficultyScore": 200,
+      "totalCards": 35,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-021",
+      "name": "First Links 21",
+      "difficulty": 21,
+      "difficultyScore": 210,
+      "totalCards": 35,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-022",
+      "name": "First Links 22",
+      "difficulty": 22,
+      "difficultyScore": 220,
+      "totalCards": 36,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        7,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-023",
+      "name": "First Links 23",
+      "difficulty": 23,
+      "difficultyScore": 230,
+      "totalCards": 36,
+      "categoryCount": 5,
+      "wordCounts": [
+        3,
+        4,
+        6,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-024",
+      "name": "First Links 24",
+      "difficulty": 24,
+      "difficultyScore": 240,
+      "totalCards": 37,
+      "categoryCount": 5,
+      "wordCounts": [
+        5,
+        6,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-025",
+      "name": "First Links 25",
+      "difficulty": 25,
+      "difficultyScore": 250,
+      "totalCards": 37,
+      "categoryCount": 5,
+      "wordCounts": [
+        4,
+        4,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-026",
+      "name": "First Links 26",
+      "difficulty": 26,
+      "difficultyScore": 260,
+      "totalCards": 38,
+      "categoryCount": 6,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "level-027",
+      "name": "First Links 27",
+      "difficulty": 27,
+      "difficultyScore": 270,
+      "totalCards": 38,
+      "categoryCount": 6,
+      "wordCounts": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        7
+      ]
+    },
+    {
+      "id": "level-028",
+      "name": "First Links 28",
+      "difficulty": 28,
+      "difficultyScore": 280,
+      "totalCards": 39,
+      "categoryCount": 6,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-029",
+      "name": "First Links 29",
+      "difficulty": 29,
+      "difficultyScore": 290,
+      "totalCards": 39,
+      "categoryCount": 6,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        6,
+        8
+      ]
+    },
+    {
+      "id": "level-030",
+      "name": "First Links 30",
+      "difficulty": 30,
+      "difficultyScore": 300,
+      "totalCards": 40,
+      "categoryCount": 6,
+      "wordCounts": [
+        4,
+        4,
+        6,
+        6,
+        7,
+        7
+      ]
+    },
+    {
+      "id": "level-031",
+      "name": "First Links 31",
+      "difficulty": 31,
+      "difficultyScore": 310,
+      "totalCards": 40,
+      "categoryCount": 6,
+      "wordCounts": [
+        3,
+        4,
+        6,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-032",
+      "name": "First Links 32",
+      "difficulty": 32,
+      "difficultyScore": 320,
+      "totalCards": 41,
+      "categoryCount": 6,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-033",
+      "name": "First Links 33",
+      "difficulty": 33,
+      "difficultyScore": 330,
+      "totalCards": 41,
+      "categoryCount": 6,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-034",
+      "name": "First Links 34",
+      "difficulty": 34,
+      "difficultyScore": 340,
+      "totalCards": 42,
+      "categoryCount": 6,
+      "wordCounts": [
+        3,
+        3,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-035",
+      "name": "First Links 35",
+      "difficulty": 35,
+      "difficultyScore": 350,
+      "totalCards": 42,
+      "categoryCount": 6,
+      "wordCounts": [
+        4,
+        4,
+        6,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-036",
+      "name": "First Links 36",
+      "difficulty": 36,
+      "difficultyScore": 360,
+      "totalCards": 43,
+      "categoryCount": 6,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        8,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-037",
+      "name": "First Links 37",
+      "difficulty": 37,
+      "difficultyScore": 370,
+      "totalCards": 43,
+      "categoryCount": 6,
+      "wordCounts": [
+        3,
+        4,
+        7,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-038",
+      "name": "First Links 38",
+      "difficulty": 38,
+      "difficultyScore": 380,
+      "totalCards": 44,
+      "categoryCount": 6,
+      "wordCounts": [
+        5,
+        5,
+        6,
+        6,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-039",
+      "name": "First Links 39",
+      "difficulty": 39,
+      "difficultyScore": 390,
+      "totalCards": 44,
+      "categoryCount": 7,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        6,
+        6,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "level-040",
+      "name": "First Links 40",
+      "difficulty": 40,
+      "difficultyScore": 400,
+      "totalCards": 45,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-041",
+      "name": "First Links 41",
+      "difficulty": 41,
+      "difficultyScore": 410,
+      "totalCards": 45,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        5,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-042",
+      "name": "First Links 42",
+      "difficulty": 42,
+      "difficultyScore": 420,
+      "totalCards": 46,
+      "categoryCount": 7,
+      "wordCounts": [
+        4,
+        4,
+        5,
+        6,
+        6,
+        6,
+        8
+      ]
+    },
+    {
+      "id": "level-043",
+      "name": "First Links 43",
+      "difficulty": 43,
+      "difficultyScore": 430,
+      "totalCards": 46,
+      "categoryCount": 7,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        6,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-044",
+      "name": "First Links 44",
+      "difficulty": 44,
+      "difficultyScore": 440,
+      "totalCards": 47,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        6,
+        6,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-045",
+      "name": "First Links 45",
+      "difficulty": 45,
+      "difficultyScore": 450,
+      "totalCards": 47,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        4,
+        7,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-046",
+      "name": "First Links 46",
+      "difficulty": 46,
+      "difficultyScore": 460,
+      "totalCards": 48,
+      "categoryCount": 7,
+      "wordCounts": [
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "id": "level-047",
+      "name": "First Links 47",
+      "difficulty": 47,
+      "difficultyScore": 470,
+      "totalCards": 48,
+      "categoryCount": 7,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-048",
+      "name": "First Links 48",
+      "difficulty": 48,
+      "difficultyScore": 480,
+      "totalCards": 49,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        5,
+        5,
+        6,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-049",
+      "name": "First Links 49",
+      "difficulty": 49,
+      "difficultyScore": 490,
+      "totalCards": 49,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        5,
+        6,
+        6,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-050",
+      "name": "First Links 50",
+      "difficulty": 50,
+      "difficultyScore": 500,
+      "totalCards": 50,
+      "categoryCount": 7,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        7,
+        7,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-051",
+      "name": "First Links 51",
+      "difficulty": 51,
+      "difficultyScore": 510,
+      "totalCards": 50,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        6,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-052",
+      "name": "First Links 52",
+      "difficulty": 52,
+      "difficultyScore": 520,
+      "totalCards": 51,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-053",
+      "name": "First Links 53",
+      "difficulty": 53,
+      "difficultyScore": 530,
+      "totalCards": 51,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        6,
+        6,
+        6,
+        7,
+        7
+      ]
+    },
+    {
+      "id": "level-054",
+      "name": "First Links 54",
+      "difficulty": 54,
+      "difficultyScore": 540,
+      "totalCards": 52,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        5,
+        5,
+        5,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "level-055",
+      "name": "First Links 55",
+      "difficulty": 55,
+      "difficultyScore": 550,
+      "totalCards": 52,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        7,
+        7,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-056",
+      "name": "First Links 56",
+      "difficulty": 56,
+      "difficultyScore": 560,
+      "totalCards": 53,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        4,
+        6,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "id": "level-057",
+      "name": "First Links 57",
+      "difficulty": 57,
+      "difficultyScore": 570,
+      "totalCards": 53,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "level-058",
+      "name": "First Links 58",
+      "difficulty": 58,
+      "difficultyScore": 580,
+      "totalCards": 54,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        8,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-059",
+      "name": "First Links 59",
+      "difficulty": 59,
+      "difficultyScore": 590,
+      "totalCards": 54,
+      "categoryCount": 8,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-060",
+      "name": "First Links 60",
+      "difficulty": 60,
+      "difficultyScore": 600,
+      "totalCards": 55,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        5,
+        8,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-061",
+      "name": "First Links 61",
+      "difficulty": 61,
+      "difficultyScore": 610,
+      "totalCards": 55,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        3,
+        5,
+        6,
+        6,
+        6,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-062",
+      "name": "First Links 62",
+      "difficulty": 62,
+      "difficultyScore": 620,
+      "totalCards": 56,
+      "categoryCount": 8,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        6,
+        7,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-063",
+      "name": "First Links 63",
+      "difficulty": 63,
+      "difficultyScore": 630,
+      "totalCards": 56,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-064",
+      "name": "First Links 64",
+      "difficulty": 64,
+      "difficultyScore": 640,
+      "totalCards": 57,
+      "categoryCount": 9,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        9
+      ]
+    },
+    {
+      "id": "level-065",
+      "name": "First Links 65",
+      "difficulty": 65,
+      "difficultyScore": 650,
+      "totalCards": 57,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-066",
+      "name": "First Links 66",
+      "difficulty": 66,
+      "difficultyScore": 660,
+      "totalCards": 58,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        4,
+        6,
+        8,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-067",
+      "name": "First Links 67",
+      "difficulty": 67,
+      "difficultyScore": 670,
+      "totalCards": 58,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        6,
+        6,
+        6,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-068",
+      "name": "First Links 68",
+      "difficulty": 68,
+      "difficultyScore": 680,
+      "totalCards": 59,
+      "categoryCount": 9,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-069",
+      "name": "First Links 69",
+      "difficulty": 69,
+      "difficultyScore": 690,
+      "totalCards": 59,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        4,
+        5,
+        7,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-070",
+      "name": "First Links 70",
+      "difficulty": 70,
+      "difficultyScore": 700,
+      "totalCards": 60,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        4,
+        8,
+        8,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-071",
+      "name": "First Links 71",
+      "difficulty": 71,
+      "difficultyScore": 710,
+      "totalCards": 60,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-072",
+      "name": "First Links 72",
+      "difficulty": 72,
+      "difficultyScore": 720,
+      "totalCards": 61,
+      "categoryCount": 9,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-073",
+      "name": "First Links 73",
+      "difficulty": 73,
+      "difficultyScore": 730,
+      "totalCards": 61,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-074",
+      "name": "First Links 74",
+      "difficulty": 74,
+      "difficultyScore": 740,
+      "totalCards": 62,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        3,
+        5,
+        5,
+        7,
+        7,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-075",
+      "name": "First Links 75",
+      "difficulty": 75,
+      "difficultyScore": 750,
+      "totalCards": 62,
+      "categoryCount": 9,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        5,
+        6,
+        7,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-076",
+      "name": "First Links 76",
+      "difficulty": 76,
+      "difficultyScore": 760,
+      "totalCards": 63,
+      "categoryCount": 10,
+      "wordCounts": [
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-077",
+      "name": "First Links 77",
+      "difficulty": 77,
+      "difficultyScore": 770,
+      "totalCards": 63,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        8,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-078",
+      "name": "First Links 78",
+      "difficulty": 78,
+      "difficultyScore": 780,
+      "totalCards": 64,
+      "categoryCount": 10,
+      "wordCounts": [
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-079",
+      "name": "First Links 79",
+      "difficulty": 79,
+      "difficultyScore": 790,
+      "totalCards": 64,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-080",
+      "name": "First Links 80",
+      "difficulty": 80,
+      "difficultyScore": 800,
+      "totalCards": 65,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-081",
+      "name": "First Links 81",
+      "difficulty": 81,
+      "difficultyScore": 810,
+      "totalCards": 65,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        5,
+        6,
+        7,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-082",
+      "name": "First Links 82",
+      "difficulty": 82,
+      "difficultyScore": 820,
+      "totalCards": 66,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-083",
+      "name": "First Links 83",
+      "difficulty": 83,
+      "difficultyScore": 830,
+      "totalCards": 66,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        5,
+        6,
+        7,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-084",
+      "name": "First Links 84",
+      "difficulty": 84,
+      "difficultyScore": 840,
+      "totalCards": 67,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        7,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-085",
+      "name": "First Links 85",
+      "difficulty": 85,
+      "difficultyScore": 850,
+      "totalCards": 67,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-086",
+      "name": "First Links 86",
+      "difficulty": 86,
+      "difficultyScore": 860,
+      "totalCards": 68,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        5,
+        5,
+        7,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-087",
+      "name": "First Links 87",
+      "difficulty": 87,
+      "difficultyScore": 870,
+      "totalCards": 68,
+      "categoryCount": 10,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        7,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-088",
+      "name": "First Links 88",
+      "difficulty": 88,
+      "difficultyScore": 880,
+      "totalCards": 69,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-089",
+      "name": "First Links 89",
+      "difficulty": 89,
+      "difficultyScore": 890,
+      "totalCards": 69,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-090",
+      "name": "First Links 90",
+      "difficulty": 90,
+      "difficultyScore": 900,
+      "totalCards": 70,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-091",
+      "name": "First Links 91",
+      "difficulty": 91,
+      "difficultyScore": 910,
+      "totalCards": 70,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-092",
+      "name": "First Links 92",
+      "difficulty": 92,
+      "difficultyScore": 920,
+      "totalCards": 71,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        7,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-093",
+      "name": "First Links 93",
+      "difficulty": 93,
+      "difficultyScore": 930,
+      "totalCards": 71,
+      "categoryCount": 11,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "level-094",
+      "name": "First Links 94",
+      "difficulty": 94,
+      "difficultyScore": 940,
+      "totalCards": 72,
+      "categoryCount": 11,
+      "wordCounts": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-095",
+      "name": "First Links 95",
+      "difficulty": 95,
+      "difficultyScore": 950,
+      "totalCards": 72,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        4,
+        4,
+        6,
+        6,
+        7,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-096",
+      "name": "First Links 96",
+      "difficulty": 96,
+      "difficultyScore": 960,
+      "totalCards": 73,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        4,
+        5,
+        6,
+        6,
+        6,
+        6,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-097",
+      "name": "First Links 97",
+      "difficulty": 97,
+      "difficultyScore": 970,
+      "totalCards": 73,
+      "categoryCount": 11,
+      "wordCounts": [
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "level-098",
+      "name": "First Links 98",
+      "difficulty": 98,
+      "difficultyScore": 980,
+      "totalCards": 74,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        7,
+        8,
+        9,
+        9
+      ]
+    },
+    {
+      "id": "level-099",
+      "name": "First Links 99",
+      "difficulty": 99,
+      "difficultyScore": 990,
+      "totalCards": 74,
+      "categoryCount": 11,
+      "wordCounts": [
+        3,
+        4,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "id": "level-100",
+      "name": "First Links 100",
+      "difficulty": 100,
+      "difficultyScore": 1000,
+      "totalCards": 75,
+      "categoryCount": 12,
+      "wordCounts": [
+        3,
+        3,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        7,
+        9
+      ]
+    }
   ]
 }
-

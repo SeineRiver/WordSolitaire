@@ -762,6 +762,124 @@
       "visual": {
         "kind": "text"
       }
+    },
+    {
+      "id": "breakfast",
+      "name": "Breakfast",
+      "words": [
+        "toast",
+        "cereal",
+        "pancake"
+      ],
+      "visual": {
+        "kind": "icon",
+        "key": "breakfast"
+      },
+      "wordVisuals": {
+        "toast": "🍞",
+        "cereal": "🥣",
+        "pancake": "🥞"
+      }
+    },
+    {
+      "id": "sports",
+      "name": "Sports",
+      "words": [
+        "soccer",
+        "tennis",
+        "hockey"
+      ],
+      "visual": {
+        "kind": "icon",
+        "key": "sports"
+      },
+      "wordVisuals": {
+        "soccer": "⚽",
+        "tennis": "🎾",
+        "hockey": "🏒"
+      }
+    },
+    {
+      "id": "drinks",
+      "name": "Drinks",
+      "words": [
+        "water",
+        "juice",
+        "tea"
+      ],
+      "visual": {
+        "kind": "icon",
+        "key": "drinks"
+      },
+      "wordVisuals": {
+        "water": "💧",
+        "juice": "🧃",
+        "tea": "🍵"
+      }
+    },
+    {
+      "id": "rainbow-colors",
+      "name": "Rainbow colors",
+      "words": [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "violet"
+      ],
+      "visual": {
+        "kind": "image",
+        "key": "rainbow-colors"
+      },
+      "categoryImage": "/assets/categories/rainbow-colors/red.png",
+      "wordImages": {
+        "red": "/assets/categories/rainbow-colors/red.png",
+        "orange": "/assets/categories/rainbow-colors/orange.png",
+        "yellow": "/assets/categories/rainbow-colors/yellow.png",
+        "green": "/assets/categories/rainbow-colors/green.png",
+        "blue": "/assets/categories/rainbow-colors/blue.png",
+        "indigo": "/assets/categories/rainbow-colors/indigo.png",
+        "violet": "/assets/categories/rainbow-colors/violet.png"
+      }
+    },
+    {
+      "id": "continents",
+      "name": "Continents",
+      "words": ["Africa", "Antarctica", "Asia", "Europe", "North America", "South America", "Australia"],
+      "visual": { "kind": "text" }
+    },
+    {
+      "id": "dwarfs",
+      "name": "Dwarfs",
+      "words": ["Doc", "Grumpy", "Happy", "Sleepy", "Bashful", "Sneezy", "Dopey"],
+      "visual": { "kind": "text" }
+    },
+    {
+      "id": "seven-seas",
+      "name": "Seven seas",
+      "words": ["Arctic", "Atlantic", "Indian", "Pacific", "Southern", "Mediterranean", "Caribbean"],
+      "visual": { "kind": "text" }
+    },
+    {
+      "id": "wonders",
+      "name": "Wonders",
+      "words": ["Great Pyramid", "Hanging Gardens", "Statue of Zeus", "Temple of Artemis", "Mausoleum", "Colossus", "Lighthouse"],
+      "visual": {
+        "kind": "image",
+        "key": "wonders"
+      },
+      "categoryImage": "/assets/categories/wonders/great-pyramid.png",
+      "wordImages": {
+        "Great Pyramid": "/assets/categories/wonders/great-pyramid.png",
+        "Hanging Gardens": "/assets/categories/wonders/hanging-gardens.png",
+        "Statue of Zeus": "/assets/categories/wonders/statue-of-zeus.png",
+        "Temple of Artemis": "/assets/categories/wonders/temple-of-artemis.png",
+        "Mausoleum": "/assets/categories/wonders/mausoleum.png",
+        "Colossus": "/assets/categories/wonders/colossus.png",
+        "Lighthouse": "/assets/categories/wonders/lighthouse.png"
+      }
     }
   ]
 }

@@ -8,7 +8,8 @@ type Category = { id: string; name: string; words: string[]; visual?: { kind?: s
 type Card = { id: string; type: 'word' | 'category'; label: string; categoryId: string; faceUp: boolean };
 type Source = number | 'waste';
 type Move = { kind: 'stack' | 'foundation' | 'draw'; from: Source | 'stock'; fromIndex?: number; to?: number; cards: Card[] };
-type GameState = { tableau: Card[][]; stock: Card[]; waste: Card[]; foundations: (string | null)[]; completed: Record<string, string[]>; moves: number; history: Move[] };
+type Level = { id: string; name: string; difficulty: number; difficultyScore: number; totalCards: number; categoryCount: number; wordCounts: number[]; cardCount: number };
+type GameState = { categoryIds: string[]; tableau: Card[][]; stock: Card[]; waste: Card[]; foundations: (string | null)[]; completed: Record<string, string[]>; moves: number; history: Move[] };
 
 const categories = new Map((categoryData.categories as Category[]).map((category) => [category.id, category]));
 const iconGlyphs: Record<string, string> = {
@@ -22,9 +23,29 @@ const iconGlyphs: Record<string, string> = {
   weather: '🌦️',
   'musical-instruments': '🎶',
   'body-parts': '🫀',
+  breakfast: '🍽️',
+  sports: '🏅',
+  drinks: '🥤',
+  'rainbow-colors': '🌈',
 };
-const levels = levelData.levels.map((item) => ({ ...item, categoryCount: item.categoryIds.length, cardCount: item.categoryIds.reduce((total, id) => total + 1 + (categories.get(id)?.words.length ?? 0), 0) }));
-const SAVE_KEY = 'solitaire-associations.save-v5';
+const levels = levelData.levels.map((item) => ({ ...item, categoryCount: item.categoryCount, cardCount: item.totalCards })) as Level[];
+const SAVE_KEY = 'solitaire-associations.save-v6';
+
+function validateLevels() {
+  const available = new Map<number, number>();
+  for (const category of categories.values()) available.set(category.words.length, (available.get(category.words.length) ?? 0) + 1);
+  const ids = new Set<string>();
+  for (const level of levels) {
+    if (ids.has(level.id) || level.wordCounts.length !== level.categoryCount || level.categoryCount < 4 || level.categoryCount > 12) throw new Error(`Invalid level recipe: ${level.id}`);
+    ids.add(level.id);
+    const total = level.categoryCount + level.wordCounts.reduce((sum, count) => sum + count, 0);
+    if (total !== level.totalCards || level.totalCards < 25 || level.totalCards > 75) throw new Error(`Invalid card total: ${level.id}`);
+    const requested = new Map<number, number>();
+    for (const count of level.wordCounts) requested.set(count, (requested.get(count) ?? 0) + 1);
+    for (const [count, needed] of requested) if (needed > (available.get(count) ?? 0)) throw new Error(`Not enough ${count}-word categories for ${level.id}`);
+  }
+}
+validateLevels();
 
 function categoryVisualReady(category: Category) {
   if (category.visual?.kind === 'icon') return Boolean(category.visual.key && iconGlyphs[category.visual.key]) && category.words.every((word) => Boolean(category.wordVisuals?.[word]));
@@ -67,8 +88,20 @@ function shuffled<T>(items: T[], seed: number) {
   return copy;
 }
 
+function resolveCategoryIds(seed: number, level: Level) {
+  const used = new Set<string>();
+  return level.wordCounts.map((wordCount, index) => {
+    const candidates = shuffled([...categories.values()].filter((category) => category.words.length === wordCount && !used.has(category.id)), seed + index * 7919);
+    const selected = candidates[0];
+    if (!selected) throw new Error(`Unable to resolve category recipe for ${level.id}`);
+    used.add(selected.id);
+    return selected.id;
+  });
+}
+
 function makeGame(seed = 101, level = levels[0]): GameState {
-  const activeCategories = level.categoryIds.map((id) => categories.get(id)!);
+  const categoryIds = resolveCategoryIds(seed, level);
+  const activeCategories = categoryIds.map((id) => categories.get(id)!);
   const deck: Card[] = activeCategories.flatMap((category) => [
     { id: `category:${category.id}`, type: 'category' as const, label: category.name, categoryId: category.id, faceUp: false },
     ...category.words.map((word) => ({ id: `word:${category.id}:${word}`, type: 'word' as const, label: word, categoryId: category.id, faceUp: false })),
@@ -82,7 +115,7 @@ function makeGame(seed = 101, level = levels[0]): GameState {
     const top = column.at(-1);
     if (top) top.faceUp = true;
   });
-  return { tableau, stock: shuffledDeck, waste: [], foundations: Array(4).fill(null), completed: Object.fromEntries(activeCategories.map((category) => [category.id, []])), moves: 0, history: [] };
+  return { categoryIds, tableau, stock: shuffledDeck, waste: [], foundations: Array(4).fill(null), completed: Object.fromEntries(activeCategories.map((category) => [category.id, []])), moves: 0, history: [] };
 }
 
 function revealTop(column: Card[]) {
@@ -95,16 +128,21 @@ function restoreToColumn(column: Card[], cards: Card[], fromIndex = column.lengt
 }
 
 function normalizeGame(candidate: Partial<GameState>, level = levels[0]): GameState {
-  const activeCategories = level.categoryIds.map((id) => categories.get(id)!);
+  const categoryIds = Array.isArray(candidate.categoryIds) && candidate.categoryIds.length === level.categoryCount && candidate.categoryIds.every((id, index) => categories.has(id) && categories.get(id)!.words.length === level.wordCounts[index]) ? candidate.categoryIds : resolveCategoryIds(101, level);
+  const activeCategories = categoryIds.map((id) => categories.get(id)!);
   const fresh = makeGame(101, level);
   const tableau = Array.isArray(candidate.tableau) ? candidate.tableau.map((column) => Array.isArray(column) ? column.map((card, index) => ({ ...card, faceUp: card.faceUp ?? index === column.length - 1 })) : []) : fresh.tableau;
   return {
     ...fresh,
     ...candidate,
+    categoryIds,
     tableau,
     stock: Array.isArray(candidate.stock) ? candidate.stock : fresh.stock,
     waste: Array.isArray(candidate.waste) ? candidate.waste : [],
-    foundations: Array.from({ length: 4 }, (_, index) => Array.isArray(candidate.foundations) ? candidate.foundations[index] ?? null : null),
+    foundations: Array.from({ length: 4 }, (_, index) => {
+      const foundationId = Array.isArray(candidate.foundations) ? candidate.foundations[index] : null;
+      return typeof foundationId === 'string' && categoryIds.includes(foundationId) ? foundationId : null;
+    }),
     completed: Object.fromEntries(activeCategories.map((category) => [category.id, Array.isArray(candidate.completed?.[category.id]) ? candidate.completed[category.id] : []])),
     history: Array.isArray(candidate.history) ? candidate.history : [],
   } as GameState;
@@ -119,45 +157,59 @@ export default function Home() {
   const [celebratingSlot, setCelebratingSlot] = useState<number | null>(null);
   const [celebratingCategory, setCelebratingCategory] = useState<string | null>(null);
   const [message, setMessage] = useState('Move an uncovered category card to an empty foundation.');
+  const [flash, setFlash] = useState<string | null>(null);
   const [saveReady, setSaveReady] = useState(false);
   const remaining = useMemo(() => game.tableau.reduce((total, column) => total + column.length, 0) + game.stock.length + game.waste.length, [game.tableau, game.stock, game.waste]);
   const selectedCards = selectedColumn === null ? [] : selectedColumn === 'waste' ? game.waste.slice(-1) : game.tableau[selectedColumn].slice(selectedStart ?? game.tableau[selectedColumn].length - 1);
   const selected = selectedCards[0] ?? null;
   const isComplete = remaining === 0;
 
+  function wrongCategory(text = 'Wrong category') {
+    setFlash(text);
+    window.setTimeout(() => setFlash(null), 900);
+  }
+
   useEffect(() => { if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js'); }, []);
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
       const savedLevel = levels.find((item) => item.id === saved?.levelId);
-      if (saved?.schemaVersion === 4 && savedLevel && saved?.game) { setLevel(savedLevel); setGame(normalizeGame(saved.game, savedLevel)); }
+      if (saved?.schemaVersion === 5 && savedLevel && saved?.game) { setLevel(savedLevel); setGame(normalizeGame(saved.game, savedLevel)); }
     } catch { /* Start a fresh game when an old save cannot be read. */ }
     setSaveReady(true);
   }, []);
-  useEffect(() => { if (saveReady) localStorage.setItem(SAVE_KEY, JSON.stringify({ schemaVersion: 4, levelId: level.id, updatedAt: new Date().toISOString(), game })); }, [game, level, saveReady]);
+  useEffect(() => { if (saveReady) localStorage.setItem(SAVE_KEY, JSON.stringify({ schemaVersion: 5, levelId: level.id, updatedAt: new Date().toISOString(), game })); }, [game, level, saveReady]);
 
   function select(source: Source, cardIndex?: number) {
     const column = source === 'waste' ? null : game.tableau[source];
     const index = source === 'waste' ? undefined : cardIndex;
     const card = source === 'waste' ? game.waste.at(-1) : column?.[index ?? column.length - 1];
     if (!card || isComplete) return;
-    const stackStart = source === 'waste' ? null : column!.findIndex((item) => item.faceUp);
+    const stackStart = source === 'waste' ? null : card.type === 'category' ? (index ?? column!.length - 1) : column!.findIndex((item) => item.faceUp);
     if (selectedColumn === source) { setSelectedColumn(null); setSelectedStart(null); setMessage('Card selection cleared.'); return; }
-    if (selectedCards.length > 0 && selectedCards.every((item) => item.type === 'word') && card.type === 'word' && selectedCards[0].categoryId === card.categoryId && source !== selectedColumn && source !== 'waste') { stackWord(source); return; }
+    if (selectedCards.length > 0 && source !== selectedColumn && card.type === 'category') {
+      const sameCategory = selectedCards.every((item) => item.categoryId === card.categoryId);
+      setMessage(sameCategory && selectedCards.every((item) => item.type === 'word') ? 'Not allowed' : 'Wrong category');
+      wrongCategory(sameCategory && selectedCards.every((item) => item.type === 'word') ? 'Not allowed' : 'Wrong category');
+      return;
+    }
+    if (selectedCards.length > 0 && source !== selectedColumn && card.type === 'word' && (selectedCards.some((item) => item.categoryId !== card.categoryId) || selectedCards.some((item) => item.type !== 'word') && selectedCards.length > 1)) { setMessage('Wrong category'); wrongCategory(); return; }
+    const canStackSelected = selectedCards.length > 0 && (selectedCards.every((item) => item.type === 'word') || (selectedCards.length === 1 && selectedCards[0].type === 'category'));
+    if (canStackSelected && card.type === 'word' && selectedCards[0].categoryId === card.categoryId && source !== selectedColumn && source !== 'waste') { stackWord(source); return; }
     setSelectedColumn(source); setSelectedStart(stackStart); setMessage(`“${card.label}” and every open card in this stack selected.`);
   }
 
   function stackWord(destination: number) {
-    if (selectedColumn === null || selectedCards.length === 0 || selectedCards.some((card) => card.type !== 'word') || destination === selectedColumn) return;
+    if (selectedColumn === null || selectedCards.length === 0 || (selectedCards.some((card) => card.type !== 'word') && !(selectedCards.length === 1 && selectedCards[0].type === 'category')) || destination === selectedColumn) return;
     const target = game.tableau[destination].at(-1);
-    if (!target || target.type !== 'word' || target.categoryId !== selectedCards[0].categoryId) { setMessage('Words may only stack on a word from the same category.'); return; }
+    if (!target || target.type !== 'word' || target.categoryId !== selectedCards[0].categoryId) { setMessage('Words may only stack on a word from the same category.'); wrongCategory(); return; }
     const cards = selectedCards;
     setGame((current) => ({ ...current,
       tableau: current.tableau.map((column, index) => index === destination ? [...column, ...cards.map((card) => ({ ...card, faceUp: true }))] : index === selectedColumn ? revealTop(column.slice(0, selectedStart ?? column.length - 1)) : column),
       waste: selectedColumn === 'waste' ? current.waste.slice(0, -1) : current.waste,
       moves: current.moves + 1, history: [...current.history, { kind: 'stack', from: selectedColumn, fromIndex: selectedStart ?? undefined, to: destination, cards }],
     }));
-    setSelectedColumn(null); setSelectedStart(null); setMessage('Matched cards stacked together — a new card is uncovered.');
+    setSelectedColumn(null); setSelectedStart(null); setMessage(selectedCards[0].type === 'category' ? 'Category card stacked on its matching word.' : 'Matched cards stacked together — a new card is uncovered.');
   }
 
   function moveToEmptyColumn(destination: number) {
@@ -176,7 +228,7 @@ export default function Home() {
     const foundation = game.foundations[slot];
     if (selected.type === 'category') {
       if (selectedCards.length !== 1) { setMessage('Move the category card by itself to its foundation.'); return; }
-      if (foundation) { setMessage('That foundation already holds a category card.'); return; }
+      if (foundation) { setMessage('That foundation already holds a category card.'); wrongCategory(); return; }
       if (game.foundations.includes(selected.categoryId)) { setMessage('That category has already been placed.'); return; }
       setGame((current) => ({ ...current,
         tableau: current.tableau.map((column, index) => index === selectedColumn ? revealTop(column.slice(0, selectedStart ?? column.length - 1)) : column),
@@ -185,7 +237,7 @@ export default function Home() {
       }));
       setSelectedColumn(null); setSelectedStart(null); setMessage(`${selected.label} is ready to receive matching words.`); return;
     }
-    if (selectedCards.some((card) => card.type !== 'word' || card.categoryId !== selected.categoryId) || foundation !== selected.categoryId) { setMessage('These cards need their matching category foundation first.'); return; }
+    if (selectedCards.some((card) => card.type !== 'word' || card.categoryId !== selected.categoryId) || foundation !== selected.categoryId) { setMessage('These cards need their matching category foundation first.'); wrongCategory(); return; }
     const categoryComplete = currentCompletedCount(selected.categoryId) + selectedCards.length >= categories.get(selected.categoryId)!.words.length;
     setGame((current) => ({ ...current,
       tableau: current.tableau.map((column, index) => index === selectedColumn ? revealTop(column.slice(0, selectedStart ?? column.length - 1)) : column),
@@ -244,6 +296,7 @@ export default function Home() {
 
   return <main className="app-shell"><section className="game-canvas" aria-label="Solitaire Associations game board">
     <header className="topbar"><button className="level-select top-level" onClick={() => setShowLevels((open) => !open)} aria-expanded={showLevels}>Level {level.difficulty} - {level.cardCount} cards</button><div className="topbar-right"><button className="top-action icon-action" onClick={hint} disabled={isComplete} aria-label="Hint" title="Hint"><span aria-hidden="true">💡</span></button><button className="top-action icon-action" onClick={undo} disabled={game.history.length === 0} aria-label="Undo" title="Undo"><span aria-hidden="true">↶</span></button><button className="restart icon-action" onClick={restart} aria-label="Restart level" title="Restart"><span aria-hidden="true">↻</span></button></div></header>
+    {flash && <div className="flash-message" role="alert">{flash}</div>}
     {showLevels && <section className="level-menu" aria-label="Choose level">{levels.map((item) => <button className={item.id === level.id ? 'current' : ''} key={item.id} onClick={() => chooseLevel(item)}><span>Level {item.difficulty}</span><small>{item.name} · {item.cardCount} cards · {item.categoryCount} categories</small></button>)}</section>}
     {isComplete && <section className="level-complete" aria-live="polite"><span className="complete-sparkle">✦</span><div><strong>Level Cleared!</strong><small>All {level.categoryCount} categories are complete · {game.moves} moves</small></div><span className="complete-sparkle">✦</span></section>}
     {isComplete && <button className="next-level-button" onClick={goToNextLevel}>{levels.findIndex((item) => item.id === level.id) === levels.length - 1 ? <>Replay<br />Level 1</> : <>Next<br />Level</>}</button>}
@@ -252,7 +305,7 @@ export default function Home() {
       {game.waste.at(-1) ? (() => { const card = game.waste.at(-1)!; const visual = cardVisual(card.categoryId, card.label, card.type); return <button className={`waste-card ${card.type} ${visual.kind} ${labelSizeClass(card.label)} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => select('waste')} disabled={isComplete} aria-label={visual.alt}><span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label) : renderVisual(visual)}</span></button>; })() : <div className="waste-empty">Open a card</div>}
       <button className="stock-card" onClick={drawCard} disabled={!game.stock.length || isComplete} aria-label="Open next card"><span>{game.stock.length}</span></button>
     </section>
-    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId)! : null; const completedWords = category ? game.completed[category.id] : []; const latestWord = completedWords?.at(-1); const latestWordClass = latestWord ? labelSizeClass(latestWord) : ''; const categoryVisual = category ? cardVisual(category.id, category.name, 'category') : null; const wordVisual = category && latestWord ? cardVisual(category.id, latestWord, 'word') : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${category ? labelSizeClass(category.name) : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => moveToFoundation(index)} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord && wordVisual ? <><span className={`foundation-base ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}>{renderCategoryVisual(categoryVisual!, category.name, true)}</span><span className={`foundation-top ${latestWordClass} ${wordVisual.kind}`} aria-label={wordVisual.alt}><span className="card-content">{renderVisual(wordVisual)}</span><small>{completedWords.length}/{category.words.length}</small></span></> : <span className={`foundation-alone ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}><span className="card-content">{renderCategoryVisual(categoryVisual!, category.name)}</span><small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
+    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId) ?? null : null; const completedWords = category ? game.completed[category.id] ?? [] : []; const latestWord = completedWords.at(-1); const latestWordClass = latestWord ? labelSizeClass(latestWord) : ''; const categoryVisual = category ? cardVisual(category.id, category.name, 'category') : null; const wordVisual = category && latestWord ? cardVisual(category.id, latestWord, 'word') : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${category ? labelSizeClass(category.name) : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => moveToFoundation(index)} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord && wordVisual ? <><span className={`foundation-base ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}>{renderCategoryVisual(categoryVisual!, category.name, true)}</span><span className={`foundation-top ${latestWordClass} ${wordVisual.kind}`} aria-label={wordVisual.alt}><span className="card-content">{renderVisual(wordVisual)}</span><small>{completedWords.length}/{category.words.length}</small></span></> : <span className={`foundation-alone ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}><span className="card-content">{renderCategoryVisual(categoryVisual!, category.name)}</span><small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
     <section className="tableau" aria-label="Tableau cards">{game.tableau.map((column, columnIndex) => {
       const reveal = column.length < 2 ? 0 : Math.max(10, Math.min(20, 160 / (column.length - 1)));
       return <div className="word-column" key={columnIndex} onClick={() => column.length === 0 && moveToEmptyColumn(columnIndex)} role={column.length === 0 ? 'button' : undefined} tabIndex={column.length === 0 ? 0 : undefined}>{column.map((card, cardIndex) => {

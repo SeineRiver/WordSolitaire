@@ -23,7 +23,8 @@ Useful commands:
 ```bash
 npm run build   # production build; run this before publishing
 npm run start   # serve the production build locally
-npm run lint    # ESLint checks
+  npm run lint    # ESLint checks
+  npm run validate # validate categories and level recipes
 ```
 
 ## Project layout
@@ -58,17 +59,21 @@ Categories are reusable records. A category has a stable ID, a short display nam
 
 Categories use `visual.kind: "text"` by default; selected categories may use `icon`. Future `image` categories should follow the [visual asset style guide](docs/visual-asset-style.md) and provide a complete visual mapping for every word. If any mapping is missing, the whole category must fall back to text. Visual alt text is optional and should fall back to the category name or original word.
 
-Levels do not copy words. They reference category IDs:
+Levels store a generation recipe rather than fixed category IDs. At runtime, the game randomly selects unused categories whose word counts match the recipe:
 
 ```json
 {
   "id": "level-001",
-  "name": "First Steps",
+  "name": "First Links 1",
   "difficulty": 1,
   "difficultyScore": 10,
-  "categoryIds": ["primary-colors", "body-parts", "shapes", "weekdays"]
+  "totalCards": 25,
+  "categoryCount": 4,
+  "wordCounts": [3, 3, 6, 9]
 }
 ```
+
+`totalCards` includes one category card per category. The invariant is `totalCards = categoryCount + sum(wordCounts)`. A new random deal can select different matching categories, making replay less predictable. The generated category IDs are saved inside the current game state so refreshes restore the exact in-progress deal.
 
 To add or edit content, change `content/categories.json` or `content/levels.json` in a text editor. Keep IDs stable after release: saved games and level references depend on them. If an ID must change, treat it as a migration and update every level and saved-data compatibility path.
 
@@ -77,10 +82,13 @@ Content invariants to check before running the app:
 - Every category ID is unique.
 - Every category name is at most two words and every category has a non-empty `words` array.
 - Words are unique within a category; avoid duplicate card IDs.
-- Every `categoryIds` entry refers to an existing category.
+- Every level has `wordCounts.length === categoryCount` and its card-total formula is correct.
+- Each requested word-count frequency is supported by enough categories in the category database.
 - Level IDs and difficulty values are unique and ordered as intended.
 
 The level picker calculates each level’s card total as one category card plus every word card in its referenced categories.
+
+The 100-level recipe set is generated with varied category sizes. It allows at most two 3-word categories and three 4-word categories per level, while keeping totals between 25 and 75 cards and category counts between 4 and 12. To regenerate the set after changing the design, run `node scripts/regenerate-levels.mjs`, then `npm run validate`.
 
 ## Game rules and current interaction model
 
