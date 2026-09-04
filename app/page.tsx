@@ -172,6 +172,8 @@ export default function Home() {
   const canvasRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<Record<string, HTMLElement | null>>({});
   const pointerDragging = useRef(false);
+  const pointerSource = useRef<{ source: Source; cardIndex?: number } | null>(null);
+  const finishPointerDragRef = useRef<(clientX: number, clientY: number) => void>(() => {});
   const [hintArrow, setHintArrow] = useState<HintArrow | null>(null);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const theme = themeMap.get(settings.themeId) ?? themes[0];
@@ -184,6 +186,44 @@ export default function Home() {
     setFlash(text);
     window.setTimeout(() => setFlash(null), 900);
   }
+
+  function finishPointerDrag(clientX: number, clientY: number) {
+    const dragged = pointerSource.current;
+    pointerSource.current = null;
+    pointerDragging.current = false;
+    if (!dragged) return;
+    const target = (document.elementFromPoint(clientX, clientY) as HTMLElement | null)?.closest<HTMLElement>('[data-foundation-index], [data-card-id], [data-column-index]');
+    if (!target) return;
+    if (target.dataset.foundationIndex !== undefined) { moveToFoundation(Number(target.dataset.foundationIndex)); return; }
+    if (target.dataset.cardId !== undefined) {
+      const columnIndex = target.closest<HTMLElement>('[data-column-index]')?.dataset.columnIndex;
+      const cardIndex = target.dataset.cardIndex;
+      if (columnIndex !== undefined && cardIndex !== undefined) select(Number(columnIndex), Number(cardIndex));
+      return;
+    }
+    if (target.dataset.columnIndex !== undefined && target.querySelector('[data-card-id]') === null) moveToEmptyColumn(Number(target.dataset.columnIndex));
+  }
+
+  finishPointerDragRef.current = finishPointerDrag;
+
+  useEffect(() => {
+    if (!isTouchDevice || settings.interactionMode !== 'drag') return;
+    const handlePointerUp = (event: PointerEvent) => finishPointerDragRef.current(event.clientX, event.clientY);
+    const handleTouchEnd = (event: TouchEvent) => {
+      const touch = event.changedTouches[0];
+      if (touch) finishPointerDragRef.current(touch.clientX, touch.clientY);
+    };
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerUp);
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchEnd);
+    };
+  }, [isTouchDevice, settings.interactionMode]);
 
   function showHintArrow(sourceKey: string, destinationKey: string) {
     window.requestAnimationFrame(() => {
@@ -371,19 +411,19 @@ export default function Home() {
     {isComplete && <button className="next-level-button" onClick={goToNextLevel}>{levels.findIndex((item) => item.id === level.id) === levels.length - 1 ? <>Replay<br />Level 1</> : <>Next<br />Level</>}</button>}
     <section className="stock-row" aria-label="Draw pile">
       <div className="stock-moves"><span>Moves</span><strong>{game.moves}</strong></div>
-      {game.waste.at(-1) ? (() => { const card = game.waste.at(-1)!; const visual = cardVisual(card.categoryId, card.label, card.type); return <button ref={(element) => { cardRefs.current[card.id] = element; }} data-card-id={card.id} draggable={settings.interactionMode === 'drag' && !isTouchDevice && !isComplete} onPointerDown={() => { if (isTouchDevice && settings.interactionMode === 'drag' && !isComplete) { pointerDragging.current = true; beginDragSelect('waste'); } }} onPointerUp={() => { if (isTouchDevice && settings.interactionMode === 'drag' && pointerDragging.current) pointerDragging.current = false; }} onDragStart={() => { if (settings.interactionMode === 'drag') beginDragSelect('waste'); }} className={`waste-card ${card.type} ${visual.kind} ${labelSizeClass(card.label)} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => !isTouchDevice && select('waste')} disabled={isComplete} aria-label={visual.alt}><span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label) : renderVisual(visual)}</span></button>; })() : <div className="waste-empty">Open a card</div>}
+    {game.waste.at(-1) ? (() => { const card = game.waste.at(-1)!; const visual = cardVisual(card.categoryId, card.label, card.type); return <button ref={(element) => { cardRefs.current[card.id] = element; }} data-card-id={card.id} draggable={settings.interactionMode === 'drag' && !isTouchDevice && !isComplete} onPointerDown={(event) => { if (isTouchDevice && settings.interactionMode === 'drag' && !isComplete) { event.preventDefault(); pointerDragging.current = true; pointerSource.current = { source: 'waste' }; beginDragSelect('waste'); } }} onDragStart={() => { if (settings.interactionMode === 'drag') beginDragSelect('waste'); }} className={`waste-card ${card.type} ${visual.kind} ${labelSizeClass(card.label)} ${selectedColumn === 'waste' ? 'selected' : ''}`} onClick={() => (settings.interactionMode === 'click' || !isTouchDevice) && select('waste')} disabled={isComplete} aria-label={visual.alt}><span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label) : renderVisual(visual)}</span></button>; })() : <div className="waste-empty">Open a card</div>}
       <button className={`stock-card ${!game.stock.length && game.waste.length ? 'redeal-card' : ''}`} onClick={!game.stock.length && game.waste.length ? redeal : drawCard} disabled={isComplete || (!game.stock.length && !game.waste.length)} aria-label={!game.stock.length && game.waste.length ? 'Redeal waste pile' : 'Open next card'}>{!game.stock.length && game.waste.length ? <span className="redeal-label">Redeal</span> : settings.showStockCount && <span>{game.stock.length}</span>}</button>
     </section>
-    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId) ?? null : null; const completedWords = category ? game.completed[category.id] ?? [] : []; const latestWord = completedWords.at(-1); const latestWordClass = latestWord ? labelSizeClass(latestWord) : ''; const categoryVisual = category ? cardVisual(category.id, category.name, 'category') : null; const wordVisual = category && latestWord ? cardVisual(category.id, latestWord, 'word') : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button ref={(element) => { cardRefs.current[`foundation-${index}`] = element; }} data-foundation-index={index} className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${category ? labelSizeClass(category.name) : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => !isTouchDevice && moveToFoundation(index)} onPointerUp={() => { if (isTouchDevice && settings.interactionMode === 'drag' && pointerDragging.current) { pointerDragging.current = false; moveToFoundation(index); } }} onDragOver={(event) => { if (settings.interactionMode === 'drag') event.preventDefault(); }} onDrop={(event) => { if (settings.interactionMode === 'drag') { event.preventDefault(); moveToFoundation(index); } }} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord && wordVisual ? <><span className={`foundation-base ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}>{renderCategoryVisual(categoryVisual!, category.name, true)}</span><span className={`foundation-top ${latestWordClass} ${wordVisual.kind}`} aria-label={wordVisual.alt}><span className="card-content">{renderVisual(wordVisual)}</span><small>{completedWords.length}/{category.words.length}</small></span></> : <span className={`foundation-alone ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}><span className="card-content">{renderCategoryVisual(categoryVisual!, category.name)}</span><small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
+    <section className="foundation-row" aria-label="Category foundations">{game.foundations.map((categoryId, index) => { const category = categoryId ? categories.get(categoryId) ?? null : null; const completedWords = category ? game.completed[category.id] ?? [] : []; const latestWord = completedWords.at(-1); const latestWordClass = latestWord ? labelSizeClass(latestWord) : ''; const categoryVisual = category ? cardVisual(category.id, category.name, 'category') : null; const wordVisual = category && latestWord ? cardVisual(category.id, latestWord, 'word') : null; const celebrating = celebratingSlot === index && celebratingCategory ? categories.get(celebratingCategory) : null; return <button ref={(element) => { cardRefs.current[`foundation-${index}`] = element; }} data-foundation-index={index} className={`foundation ${category ? 'occupied' : ''} ${latestWord ? 'stacked' : ''} ${category ? labelSizeClass(category.name) : ''} ${celebrating ? 'completed' : ''}`} key={index} onClick={() => (settings.interactionMode === 'click' || !isTouchDevice) && moveToFoundation(index)} onDragOver={(event) => { if (settings.interactionMode === 'drag') event.preventDefault(); }} onDrop={(event) => { if (settings.interactionMode === 'drag') { event.preventDefault(); moveToFoundation(index); } }} disabled={isComplete}>{celebrating ? <><span>✓ {celebrating.name}</span><small>Complete!</small></> : category ? <>{latestWord && wordVisual ? <><span className={`foundation-base ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}>{renderCategoryVisual(categoryVisual!, category.name, true)}</span><span className={`foundation-top ${latestWordClass} ${wordVisual.kind}`} aria-label={wordVisual.alt}><span className="card-content">{renderVisual(wordVisual)}</span><small>{completedWords.length}/{category.words.length}</small></span></> : <span className={`foundation-alone ${categoryVisual!.kind}`} aria-label={categoryVisual!.alt}><span className="card-content">{renderCategoryVisual(categoryVisual!, category.name)}</span><small>{completedWords.length}/{category.words.length}</small></span>}</> : <span>Category</span>}</button>; })}</section>
     <section className="tableau" aria-label="Tableau cards">{game.tableau.map((column, columnIndex) => {
       const reveal = column.length < 2 ? 0 : Math.max(10, Math.min(20, 160 / (column.length - 1)));
-      return <div className="word-column" data-column-index={columnIndex} key={columnIndex} onClick={() => !isTouchDevice && column.length === 0 && moveToEmptyColumn(columnIndex)} onPointerUp={() => { if (isTouchDevice && settings.interactionMode === 'drag' && pointerDragging.current && column.length === 0) { pointerDragging.current = false; moveToEmptyColumn(columnIndex); } }} onDragOver={(event) => { if (settings.interactionMode === 'drag') event.preventDefault(); }} onDrop={(event) => { if (settings.interactionMode === 'drag' && column.length === 0) { event.preventDefault(); moveToEmptyColumn(columnIndex); } }} role={column.length === 0 ? 'button' : undefined} tabIndex={column.length === 0 ? 0 : undefined}>{column.map((card, cardIndex) => {
+      return <div className="word-column" data-column-index={columnIndex} key={columnIndex} onClick={() => (settings.interactionMode === 'click' || !isTouchDevice) && column.length === 0 && moveToEmptyColumn(columnIndex)} onDragOver={(event) => { if (settings.interactionMode === 'drag') event.preventDefault(); }} onDrop={(event) => { if (settings.interactionMode === 'drag' && column.length === 0) { event.preventDefault(); moveToEmptyColumn(columnIndex); } }} role={column.length === 0 ? 'button' : undefined} tabIndex={column.length === 0 ? 0 : undefined}>{column.map((card, cardIndex) => {
         const accessible = card.faceUp;
         const active = selectedColumn === columnIndex && cardIndex >= (selectedStart ?? column.length);
         const fullyShown = cardIndex === column.length - 1;
         const lengthClass = labelSizeClass(card.label);
         const visual = cardVisual(card.categoryId, card.label, card.type);
-        return <button ref={(element) => { cardRefs.current[card.id] = element; }} data-card-id={card.id} draggable={settings.interactionMode === 'drag' && !isTouchDevice && accessible && !isComplete} onPointerDown={() => { if (isTouchDevice && settings.interactionMode === 'drag' && accessible && !isComplete) { pointerDragging.current = true; beginDragSelect(columnIndex, cardIndex); } }} onPointerUp={() => { if (isTouchDevice && settings.interactionMode === 'drag' && pointerDragging.current) { pointerDragging.current = false; select(columnIndex, cardIndex); } }} onDragStart={() => { if (settings.interactionMode === 'drag') beginDragSelect(columnIndex, cardIndex); }} onDragOver={(event) => { if (settings.interactionMode === 'drag') event.preventDefault(); }} onDrop={(event) => { if (settings.interactionMode === 'drag') { event.preventDefault(); select(columnIndex, cardIndex); } }} className={`word-card ${card.type} ${card.faceUp ? 'uncovered' : 'covered'} ${fullyShown ? 'full' : ''} ${lengthClass} ${visual.kind} ${active ? 'selected' : ''}`} disabled={!accessible || isComplete} key={card.id} style={{ top: cardIndex * reveal, zIndex: cardIndex }} onClick={() => !isTouchDevice && select(columnIndex, cardIndex)} aria-label={visual.alt}>{card.faceUp ? <span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label, !fullyShown) : renderVisual(visual)}</span> : ''}</button>;
+        return <button ref={(element) => { cardRefs.current[card.id] = element; }} data-card-id={card.id} data-card-index={cardIndex} draggable={settings.interactionMode === 'drag' && !isTouchDevice && accessible && !isComplete} onPointerDown={(event) => { if (isTouchDevice && settings.interactionMode === 'drag' && accessible && !isComplete) { event.preventDefault(); pointerDragging.current = true; pointerSource.current = { source: columnIndex, cardIndex }; beginDragSelect(columnIndex, cardIndex); } }} onDragStart={() => { if (settings.interactionMode === 'drag') beginDragSelect(columnIndex, cardIndex); }} onDragOver={(event) => { if (settings.interactionMode === 'drag') event.preventDefault(); }} onDrop={(event) => { if (settings.interactionMode === 'drag') { event.preventDefault(); select(columnIndex, cardIndex); } }} className={`word-card ${card.type} ${card.faceUp ? 'uncovered' : 'covered'} ${fullyShown ? 'full' : ''} ${lengthClass} ${visual.kind} ${active ? 'selected' : ''}`} disabled={!accessible || isComplete} key={card.id} style={{ top: cardIndex * reveal, zIndex: cardIndex }} onClick={() => (settings.interactionMode === 'click' || !isTouchDevice) && select(columnIndex, cardIndex)} aria-label={visual.alt}>{card.faceUp ? <span className="card-content">{card.type === 'category' ? renderCategoryVisual(visual, card.label, !fullyShown) : renderVisual(visual)}</span> : ''}</button>;
       })}</div>;
     })}</section>
   </section></main>;
