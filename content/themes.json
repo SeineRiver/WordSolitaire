@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "themes": [
+    {
+      "id": "default",
+      "name": "Default",
+      "colors": {
+        "canvasStart": "#245b49",
+        "canvasEnd": "#12362d",
+        "wordFront": "#fff9e9",
+        "categoryFront": "#e3b84f",
+        "cardBack": "#72539b",
+        "cardBackStripe": "#a07cc1",
+        "wordText": "#243b32",
+        "categoryText": "#513c12",
+        "cardBorder": "#d7c58f",
+        "selectedBorder": "#ef9b55"
+      },
+      "cards": {
+        "borderWidth": 1,
+        "borderRadius": 12,
+        "shadow": "soft"
+      }
+    },
+    {
+      "id": "pastel",
+      "name": "Pastel - Mint",
+      "colors": {
+        "canvasStart": "#17463f",
+        "canvasEnd": "#20395d",
+        "wordFront": "#ccefe3",
+        "categoryFront": "#eccb88",
+        "cardBack": "#82b8d8",
+        "cardBackStripe": "#a9d5e6",
+        "wordText": "#285348",
+        "categoryText": "#654d32",
+        "cardBorder": "#d8fff0",
+        "selectedBorder": "#f0b36a"
+      },
+      "cards": {
+        "borderWidth": 2,
+        "borderRadius": 14,
+        "shadow": "soft"
+      }
+    },
+    {
+      "id": "pastel-summer",
+      "name": "Pastel - Summer",
+      "colors": {
+        "canvasStart": "#3f625d",
+        "canvasEnd": "#51445c",
+        "wordFront": "#cde5d9",
+        "categoryFront": "#f2ebcc",
+        "cardBack": "#c6e2e7",
+        "cardBackStripe": "#f7dde8",
+        "wordText": "#34554b",
+        "categoryText": "#68445a",
+        "cardBorder": "#ffffff",
+        "selectedBorder": "#e8a3bc"
+      },
+      "cards": {
+        "borderWidth": 2,
+        "borderRadius": 14,
+        "shadow": "soft"
+      }
+    }
+  ]
+}

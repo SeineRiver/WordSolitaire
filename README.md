@@ -59,6 +59,8 @@ Categories are reusable records. A category has a stable ID, a short display nam
 
 Categories use `visual.kind: "text"` by default; selected categories may use `icon`. Future `image` categories should follow the [visual asset style guide](docs/visual-asset-style.md) and provide a complete visual mapping for every word. If any mapping is missing, the whole category must fall back to text. Visual alt text is optional and should fall back to the category name or original word.
 
+Themes are defined separately in `content/themes.json`. Each theme has a stable ID, semantic card colors, and card geometry tokens. The selected `themeId` is stored with local settings and applied through CSS variables, so adding a new theme does not require changing category or level data.
+
 Levels store a generation recipe rather than fixed category IDs. At runtime, the game randomly selects unused categories whose word counts match the recipe:
 
 ```json
