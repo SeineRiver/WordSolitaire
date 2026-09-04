@@ -9,9 +9,9 @@ button { font: inherit; }
 .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }.progress div { padding: 9px 8px; border: 1px solid #93b79a45; border-radius: 12px; background: #0b291f70; text-align: center; }.progress span { display: block; color: #c3d5c7; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }.progress strong { display: block; margin-top: 1px; font-size: 15px; }
 .level-select { display: block; width: 100%; margin-top: 1px; padding: 0; border: 0; color: #f9f3e5; background: transparent; font-size: 15px; font-weight: 700; cursor: pointer; }
 .topbar-right { display: flex; align-items: center; gap: 7px; }.top-level { width: auto; margin: 0; padding: 8px 10px; border: 1px solid #8bb59d80; border-radius: 10px; background: #ffffff12; font-size: 14px; text-align: left; }.top-action { height: 40px; padding: 0 12px; border: 1px solid #8bb59d80; border-radius: 12px; color: #f9f3e5; background: #ffffff12; font-size: 12px; font-weight: 700; }
-.level-menu { display: grid; gap: 5px; max-height: 220px; overflow-y: auto; padding: 7px; border: 1px solid #93b79a60; border-radius: 12px; background: #0b291fee; }
-.level-menu button { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 8px 9px; border: 1px solid transparent; border-radius: 8px; color: #f9f3e5; background: #ffffff0d; text-align: left; cursor: pointer; }
-.level-menu button.current { border-color: #ddbf60; background: #ddbf6025; }.level-menu span { font-size: 11px; font-weight: 700; white-space: nowrap; }.level-menu small { color: #c3d5c7; font-size: 9px; text-align: right; }
+.level-menu { display: grid; gap: 2px; max-height: 220px; overflow-y: auto; padding: 5px; border: 1px solid #93b79a60; border-radius: 12px; background: #0b291fee; }
+.level-menu button { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding: 5px 8px; border: 1px solid transparent; border-radius: 8px; color: #f9f3e5; background: #ffffff0d; text-align: left; cursor: pointer; }
+.level-menu button.current { border-color: #ddbf60; background: #ddbf6025; }.level-menu span { font-size: 13px; font-weight: 700; white-space: nowrap; }.level-menu small { color: #c3d5c7; font-size: 11px; text-align: right; }
 .level-complete { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 10px; border: 1px solid #f4d774; border-radius: 14px; color: #4b3814; background: linear-gradient(135deg, #fff4b0, #e9bd4f); box-shadow: 0 5px 0 #6b4d1d45, 0 0 22px #f6d66a55; animation: level-clear-in .6s cubic-bezier(.2,.8,.2,1) both; text-align: center; }.level-complete div { display: flex; flex-direction: column; gap: 3px; }.level-complete strong { font-family: Georgia, serif; font-size: 20px; letter-spacing: -.02em; }.level-complete small { font-size: 10px; font-weight: 600; }.complete-sparkle { color: #fff9d5; font-size: 23px; animation: sparkle-pulse 1.1s ease-in-out infinite alternate; }
 @keyframes level-clear-in { from { transform: translateY(-8px) scale(.94); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } } @keyframes sparkle-pulse { from { transform: scale(.75) rotate(0); opacity: .55; } to { transform: scale(1.2) rotate(18deg); opacity: 1; } }
 .next-level-button { position: absolute; top: 50%; left: 50%; z-index: 20; display: grid; place-items: center; width: 104px; height: 104px; padding: 0; border: 3px solid #fff1a8; border-radius: 50%; color: #4b3510; background: linear-gradient(145deg, #ffe98b, #e2a83d); box-shadow: 0 8px 0 #6b4d1d66, 0 0 0 8px #ffe28a22, 0 0 28px #f6d66a99; font-size: 13px; font-weight: 800; line-height: 1.15; text-align: center; transform: translate(-50%, -50%); animation: next-level-pop .7s .2s cubic-bezier(.2,.8,.2,1) both, next-level-glow 1.8s .9s ease-in-out infinite alternate; }
@@ -295,6 +295,8 @@ button { font: inherit; }
 .theme-pastel .settings-panel, .theme-pastel .level-menu { color: #405064; background: #eef8f5f5; border-color: #ffffffaa; }
 .theme-pastel .settings-panel label { color: #405064; }
 .theme-pastel .settings-panel .settings-heading button { color: #405064; }
+.theme-pastel .level-menu button { color: #405064; }
+.theme-pastel .level-menu small { color: #405064; }
 .theme-pastel .settings-panel select { color: #405064; background: #ffffffaa; border-color: #ffffff; }
 .theme-pastel-summer { --theme-canvas-start: #3f625d; --theme-canvas-end: #51445c; --theme-word-front: #cde5d9; --theme-category-front: #f2ebcc; --theme-card-back: #c6e2e7; --theme-card-back-stripe: #f7dde8; --theme-word-text: #34554b; --theme-category-text: #68445a; --theme-card-border: #ffffff; --theme-selected-border: #e8a3bc; --theme-card-border-width: 2px; --theme-card-radius: 14px; color: #f4f8f5; }
 .theme-pastel-summer.game-canvas { background: linear-gradient(145deg, var(--theme-canvas-start), var(--theme-canvas-end)); }
@@ -308,6 +310,8 @@ button { font: inherit; }
 .theme-pastel-summer .top-level, .theme-pastel-summer .top-action, .theme-pastel-summer .restart { color: #f4f8f5; border-color: #ffffff66; background: #ffffff18; }
 .theme-pastel-summer .settings-panel, .theme-pastel-summer .level-menu { color: #39434b; background: #f2f1edfa; border-color: #ffffff; }
 .theme-pastel-summer .settings-panel label, .theme-pastel-summer .settings-panel .settings-heading button { color: #39434b; }
+.theme-pastel-summer .level-menu button { color: #39434b; }
+.theme-pastel-summer .level-menu small { color: #39434b; }
 .theme-pastel-summer .settings-panel select { color: #39434b; background: #ffffff; border-color: #cde5d9; }
 .foundation-alone { font-size: clamp(11px, 3vw, 14px); }
 .foundation-alone.word-short { font-size: clamp(13px, 3.2vw, 16px); }
