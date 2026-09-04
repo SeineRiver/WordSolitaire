@@ -328,7 +328,7 @@ button { font: inherit; }
   left: 0;
   top: 0;
   z-index: 1000 !important;
-  width: min(28vw, 120px) !important;
+  width: min(26vw, 110px) !important;
   height: auto !important;
   aspect-ratio: 3 / 4;
   pointer-events: none;
