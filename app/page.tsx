@@ -172,6 +172,8 @@ export default function Home() {
   const [saveReady, setSaveReady] = useState(false);
   const canvasRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<Record<string, HTMLElement | null>>({});
+  const levelMenuRef = useRef<HTMLElement>(null);
+  const currentLevelRef = useRef<HTMLButtonElement>(null);
   const pointerDragging = useRef(false);
   const pointerSource = useRef<{ source: Source; cardIndex?: number } | null>(null);
   const finishPointerDragRef = useRef<(clientX: number, clientY: number) => void>(() => {});
@@ -251,6 +253,19 @@ export default function Home() {
     document.addEventListener('pointerdown', handleOutsidePointer);
     return () => document.removeEventListener('pointerdown', handleOutsidePointer);
   }, [showSettings]);
+
+  useEffect(() => {
+    if (!showLevels) return;
+    const frame = window.requestAnimationFrame(() => {
+      const menu = levelMenuRef.current;
+      const current = currentLevelRef.current;
+      if (menu && current) {
+        const currentOffset = current.getBoundingClientRect().top - menu.getBoundingClientRect().top + menu.scrollTop;
+        menu.scrollTop = Math.max(0, currentOffset - 4);
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [showLevels, level.id]);
 
   function showHintArrow(sourceKey: string, destinationKey: string) {
     window.requestAnimationFrame(() => {
@@ -441,7 +456,7 @@ export default function Home() {
     {hintArrow && <svg className="hint-arrow-overlay" viewBox={`0 0 ${canvasRef.current?.clientWidth ?? 1} ${canvasRef.current?.clientHeight ?? 1}`} aria-hidden="true"><defs><marker id="hint-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" /></marker></defs><path className="hint-arrow-path" d={`M ${hintArrow.from.x} ${hintArrow.from.y} Q ${(hintArrow.from.x + hintArrow.to.x) / 2 + 30} ${(hintArrow.from.y + hintArrow.to.y) / 2 - 35} ${hintArrow.to.x} ${hintArrow.to.y}`} markerEnd="url(#hint-arrowhead)" /></svg>}
     {touchDrag && <div className={`touch-drag-ghost word-card ${touchDrag.card.type} uncovered full ${labelSizeClass(touchDrag.card.label)} ${cardVisual(touchDrag.card.categoryId, touchDrag.card.label, touchDrag.card.type).kind}`} style={{ left: touchDrag.x, top: touchDrag.y }} aria-hidden="true"><span className="card-content">{(() => { const visual = cardVisual(touchDrag.card.categoryId, touchDrag.card.label, touchDrag.card.type); return touchDrag.card.type === 'category' ? renderCategoryVisual(visual, touchDrag.card.label) : renderVisual(visual); })()}</span></div>}
     {showSettings && <section className="settings-panel" aria-label="Game settings"><div className="settings-heading"><strong>Settings</strong><button onClick={() => setShowSettings(false)} aria-label="Close settings">×</button></div><label><span>Theme</span><select value={settings.themeId} onChange={(event) => setSettings((current) => ({ ...current, themeId: event.target.value }))}>{themes.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label><label><span>Interaction</span><select value={settings.interactionMode} onChange={(event) => setSettings((current) => ({ ...current, interactionMode: event.target.value === 'drag' ? 'drag' : 'click' }))}><option value="click">Click</option><option value="drag">Drag &amp; drop</option></select></label><label><span>Reduced motion</span><input type="checkbox" checked={settings.reducedMotion} onChange={(event) => setSettings((current) => ({ ...current, reducedMotion: event.target.checked }))} /></label><label><span>Show stock count</span><input type="checkbox" checked={settings.showStockCount} onChange={(event) => setSettings((current) => ({ ...current, showStockCount: event.target.checked }))} /></label><label><span>Allow category stacking</span><input type="checkbox" checked={settings.allowCategoryStack} onChange={(event) => setSettings((current) => ({ ...current, allowCategoryStack: event.target.checked }))} /></label></section>}
-    {showLevels && <section className="level-menu" aria-label="Choose level">{levels.map((item) => <button className={item.id === level.id ? 'current' : ''} key={item.id} onClick={() => chooseLevel(item)}><span>Level {item.difficulty}</span><small>{item.cardCount} cards · {item.categoryCount} categories</small></button>)}</section>}
+    {showLevels && <section ref={levelMenuRef} className="level-menu" aria-label="Choose level">{levels.map((item) => <button ref={item.id === level.id ? currentLevelRef : undefined} className={item.id === level.id ? 'current' : ''} key={item.id} onClick={() => chooseLevel(item)}><span>Level {item.difficulty}</span><small>{item.cardCount} cards · {item.categoryCount} categories</small></button>)}</section>}
     {isComplete && <section className="level-complete" aria-live="polite"><span className="complete-sparkle">✦</span><div><strong>Level Cleared!</strong><small>All {level.categoryCount} categories are complete · {game.moves} moves</small></div><span className="complete-sparkle">✦</span></section>}
     {isComplete && <button className="next-level-button" onClick={goToNextLevel}>{levels.findIndex((item) => item.id === level.id) === levels.length - 1 ? <>Replay<br />Level 1</> : <>Next<br />Level</>}</button>}
     <section className="stock-row" aria-label="Draw pile">
