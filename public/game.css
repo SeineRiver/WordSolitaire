@@ -163,7 +163,7 @@ button { font: inherit; }
 .foundation-base.image { display: flex !important; align-items: flex-start; justify-content: center; padding-top: 2px; }
 .foundation-base.image .card-image { display: none !important; }
 .category-label { display: block; line-height: 1.05; text-align: center; }
-.category-glyph { display: block; font-size: 1.6em; line-height: 1; }
+.category-glyph { display: block; font-size: clamp(22px, calc((100cqw - 24px) / 13.333), 42px); line-height: 1; }
 .foundation.word-short .category-label { font-size: clamp(15px, calc(3.5vw + 2px), 18px); }
 .foundation.word-medium .category-label { font-size: clamp(14px, calc(3.5vw + 1px), 17px); }
 .word-card.category.image,
@@ -191,6 +191,19 @@ button { font: inherit; }
 .word-card.category.icon:not(.full) .card-content { display: block; text-align: center; }
 .foundation-base.icon { font-size: 8px !important; }
 .foundation-base.icon .category-label { font-size: inherit; }
+.foundation-top small,
+.foundation-alone small { font-size: 10px !important; }
+.stock-card span { font-size: 14px; }
+.waste-empty { font-size: 12px; }
+.word-card,
+.stock-card,
+.waste-card,
+.waste-empty { border-width: 2px; }
+.word-card.selected,
+.waste-card.selected { border-width: 5px; }
+.icon-action { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; font-size: 22px; line-height: 1; }
+.icon-action span { display: grid; width: 100%; height: 100%; place-items: center; transform: none; }
+.top-level { font-size: 15px; }
 .word-card.category.image,
 .waste-card.category.image,
 .foundation-alone.image,
